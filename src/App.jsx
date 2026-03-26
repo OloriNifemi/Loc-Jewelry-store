@@ -12,7 +12,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-black text-off-white">
       <Navbar />
-      <ScrollToTop /> {/* ensures every page starts from top */}
+      <ScrollToTop /> {/* ensures every page starts from top */} 
       <Routes>
         <Route path="/"         element={<Home />} />
         <Route path="/about"    element={<About />} />
