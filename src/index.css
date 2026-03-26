@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap');
+
+:root {
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0a0a0a;
+  color: #fafaf8;
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+}
+
+/* hide scrollbar on blog tabs */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* article prose */
+.article-prose p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  line-height: 1.95;
+  color: #cccccc;
+  margin-bottom: 1.4rem;
+}
+.article-prose h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: #fafaf8;
+  margin: 2.5rem 0 1rem;
+  font-weight: 600;
+}
+.article-prose strong {
+  color: #fafaf8;
+  font-weight: 600;
+}
