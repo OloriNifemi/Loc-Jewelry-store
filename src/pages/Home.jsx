@@ -6,16 +6,23 @@ import {
   NecklaceIcon, RingIcon, BraceletIcon,
   EarringIcon, ChainIcon, BangleIcon,
 } from '../components/JewelryIcons.jsx'
+import SingleEarring1 from '../../assets/Single-earrings-1.jpeg'
+import SingleEarring2 from '../../assets/Single-earrings-2.jpeg'
+import SingleEarring3 from '../../assets/Single-earrings-3.jpeg'
+import SingleEarring4 from '../../assets/Single-earrings-4.jpeg'
+import SingleEarring5 from '../../assets/Single-earrings-5.jpeg'
+import SingleEarring6 from '../../assets/Single-earrings-6.jpeg'
+import JewelryModeledSet from '../../assets/jewelry-modeled-set-4.jpeg'
 
 const WA = 'https://wa.me/2349116971778?text=Hi,%20I%20am%20interested%20in%20your%20jewelry'
 
 const products = [
-  { name: 'Oba Necklace',        category: 'Necklace', price: '₦120,000', badge: 'Bestseller', bgGradient: 'bg-gradient-to-br from-[#1a1505] via-[#2d2208] to-[#0f0f0f]', icon: NecklaceIcon },
-  { name: 'Queen Ring',          category: 'Ring',     price: '₦90,000',  badge: null,         bgGradient: 'bg-gradient-to-br from-[#0f0f0f] via-[#1a1a1a] to-[#0a0a08]',  icon: RingIcon },
-  { name: 'Elegance Bracelet',   category: 'Bracelet', price: '₦75,000',  badge: 'New',        bgGradient: 'bg-gradient-to-br from-[#120d00] via-[#1c1500] to-[#0f0f0f]',  icon: BraceletIcon },
-  { name: 'Royale Drop Earrings',category: 'Earrings', price: '₦65,000',  badge: null,         bgGradient: 'bg-gradient-to-br from-[#0f0f0f] via-[#1a1810] to-[#0a0a0a]',  icon: EarringIcon },
-  { name: 'Lagos Gold Chain',    category: 'Necklace', price: '₦110,000', badge: null,         bgGradient: 'bg-gradient-to-br from-[#1a1208] via-[#251a08] to-[#111108]',   icon: ChainIcon },
-  { name: 'Heritage Bangle',     category: 'Bracelet', price: '₦85,000',  badge: 'Limited',   bgGradient: 'bg-gradient-to-br from-[#0a0a0a] via-[#151510] to-[#0f0f0f]',  icon: BangleIcon },
+  { name: 'Ọlórí Luxe Drips', category: 'Earrings', price: '₦6,500', badge: 'Bestseller', image: SingleEarring1, height:'h-[350px]' },
+  { name: 'Ọlórí Minis', category: 'Earrings', price: '₦4,500', badge: null, image: SingleEarring2, height:'h-[350px]' },
+  { name: 'Elegance Bracelet', category: 'Earrings', price: '₦75,000', badge: 'New', image: SingleEarring3, height:'h-[350px]' },
+  { name: 'Royale Drop Earrings', category: 'Earrings', price: '₦65,000', badge: null, image: SingleEarring4, height:'h-[350px]' },
+  { name: 'Lagos Gold Chain', category: 'Earrings', price: '₦110,000', badge: null, image: SingleEarring5, height:'h-[350px]' },
+  { name: 'Heritage Bangle', category: 'Earrings', price: '₦85,000', badge: 'Limited', image: SingleEarring6, height:'h-[350px]' },
 ]
 
 const pillars = [
@@ -29,7 +36,7 @@ export default function Home() {
   return (
     <>
       {/* ── HERO ── */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen max-md:pb-20 flex items-center justify-center overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_70%_50%,rgba(201,168,76,0.07)_0%,transparent_60%),radial-gradient(ellipse_40%_60%_at_20%_80%,rgba(201,168,76,0.04)_0%,transparent_60%),linear-gradient(160deg,#0a0a0a_40%,#111008_100%)]" />
 
@@ -86,7 +93,7 @@ export default function Home() {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 font-montserrat text-[0.55rem] tracking-[0.25em] uppercase text-[#888] animate-heroFadeIn12">
+        <div className="absolute bottom-4 flex  -translate-x-1/2 justify-center  flex-col items-center gap-2 font-montserrat text-[0.55rem] tracking-[0.25em] uppercase text-[#888] animate-heroFadeIn12">
           <div className="w-px h-10 bg-gradient-to-b from-gold to-transparent animate-scrollPulse" />
           <span>Scroll</span>
         </div>
@@ -114,7 +121,7 @@ export default function Home() {
 
           {/* Visual */}
           <div className="relative">
-            <div className="w-full aspect-[4/5] bg-gradient-to-br from-[#111008] via-[#1a1505] to-[#0a0a08] rounded-xl border border-gold/15 flex items-center justify-center overflow-hidden">
+            <div className="w-full aspect-[4/5] bg-[url('/assets/jewelry-modeled-set-4.jpeg')] bg-cover lg:bg-fit bg-center rounded-xl border border-gold/15 flex items-center justify-center overflow-hidden">
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,rgba(201,168,76,0.1),transparent_60%)]" />
               <div className="absolute inset-6 border border-gold/15 rounded-lg">
                 {['tl','tr','bl','br'].map((pos) => (
@@ -125,15 +132,15 @@ export default function Home() {
                     ${pos==='br' ? 'bottom-2 right-2 border-b border-r' : ''}`} />
                 ))}
               </div>
-              <svg width="140" height="140" viewBox="0 0 140 140" fill="none" className="relative z-10">
+              {/* <svg width="140" height="140" viewBox="0 0 140 140" fill="none" className="relative z-10">
                 <circle cx="70" cy="70" r="55" stroke="#c9a84c" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.4"/>
                 <circle cx="70" cy="70" r="44" stroke="#c9a84c" strokeWidth="2" opacity="0.6"/>
                 <circle cx="70" cy="70" r="30" stroke="#c9a84c" strokeWidth="1" opacity="0.3"/>
                 <path d="M70 40 L75 58 L95 58 L80 70 L86 88 L70 77 L54 88 L60 70 L45 58 L65 58 Z" fill="#c9a84c" opacity="0.9"/>
-              </svg>
+              </svg> */}
             </div>
             {/* Stat badge */}
-            <div className="absolute -bottom-6 -right-6 bg-gold text-black p-6 rounded-xl text-center min-w-[120px]">
+            <div className="absolute -bottom-6 lg:-right-6 -right-4 bg-gold text-black p-6 rounded-xl text-center min-w-[120px]">
               <span className="font-playfair text-3xl font-bold block leading-none">500+</span>
               <span className="font-montserrat text-[0.55rem] tracking-[0.15em] uppercase font-bold">Happy Clients</span>
             </div>

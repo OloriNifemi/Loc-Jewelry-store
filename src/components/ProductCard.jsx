@@ -7,7 +7,7 @@ export default function ProductCard({ name, category, price, badge, image, heigh
 
   return (
     <div className="group bg-[#1a1a1a] rounded-xl overflow-hidden border border-gold/8
-                    transition-all duration-500 hover:-translate-y-2
+                    transition-all duration-500 hover:-translate-y-2 lg:w-[350px]
                     hover:shadow-[0_24px_60px_rgba(0,0,0,0.6),0_0_0_1px_rgba(201,168,76,0.2)]">
 
       {/* Image */}
