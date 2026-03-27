@@ -93,7 +93,7 @@ export default function Home() {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-4 flex  -translate-x-1/2 justify-center  flex-col items-center gap-2 font-montserrat text-[0.55rem] tracking-[0.25em] uppercase text-[#888] animate-heroFadeIn12">
+        <div className="absolute bottom-8 flex  -translate-x-1/2 justify-center  flex-col items-center gap-2 font-montserrat text-[0.55rem] tracking-[0.25em] uppercase text-[#888] animate-heroFadeIn12">
           <div className="w-px h-10 bg-gradient-to-b from-gold to-transparent animate-scrollPulse" />
           <span>Scroll</span>
         </div>
