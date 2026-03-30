@@ -58,8 +58,8 @@ export default function Contact() {
 
     emailjs
       .send(
-        "YOUR_SERVICE_ID", // replace with your EmailJS service ID
-        "YOUR_TEMPLATE_ID", // replace with your EmailJS template ID
+        "service_6zkoewj", // replace with your EmailJS service ID
+        "template_4h58d9r", // replace with your EmailJS template ID
         templateParams,
         "dD6N3FmvMo-J2s26W" // replace with your EmailJS public key
       )
