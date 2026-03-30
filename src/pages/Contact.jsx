@@ -9,6 +9,7 @@ import {
   FaClock,
   FaPenToSquare,
 } from "react-icons/fa6";
+import emailjs from "@emailjs/browser";
 
 const WA =
   "https://wa.me/2349116971778?text=Hi,%20I%20am%20interested%20in%20your%20jewelry";
@@ -34,6 +35,7 @@ const socials = [
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -44,30 +46,42 @@ export default function Contact() {
 
   function handleSubmit(e) {
     e.preventDefault();
+    setSending(true);
 
-    const body = [
-      `Name: ${form.name}`,
-      `Email: ${form.email}`,
-      `Phone/Contact: ${form.contact}`,
-      ``,
-      `Message:`,
-      form.message,
-    ].join("\n");
+    const templateParams = {
+      from_name: form.name,
+      from_email: form.email,
+      subject: form.subject,
+      contact: form.contact,
+      message: form.message,
+    };
 
-    const mailtoLink =
-      `mailto:${RECIPIENT}` +
-      `?subject=${encodeURIComponent(
-        form.subject || "Inquiry from L.O.C Website"
-      )}` +
-      `&body=${encodeURIComponent(body)}`;
-
-    window.location.href = mailtoLink;
-
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setForm({ name: "", email: "", subject: "", contact: "", message: "" });
-    }, 3500);
+    emailjs
+      .send(
+        "YOUR_SERVICE_ID", // replace with your EmailJS service ID
+        "YOUR_TEMPLATE_ID", // replace with your EmailJS template ID
+        templateParams,
+        "dD6N3FmvMo-J2s26W" // replace with your EmailJS public key
+      )
+      .then(
+        (response) => {
+          setSubmitted(true);
+          setSending(false);
+          setForm({
+            name: "",
+            email: "",
+            subject: "",
+            contact: "",
+            message: "",
+          });
+          setTimeout(() => setSubmitted(false), 3500);
+        },
+        (error) => {
+          console.error("Email send failed:", error);
+          setSending(false);
+          alert("Failed to send message. Please try again.");
+        }
+      );
   }
 
   return (
@@ -158,7 +172,6 @@ export default function Contact() {
           {/* Right — form */}
           <div>
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-
               <div className="flex flex-col gap-2">
                 <label className="font-montserrat text-[0.6rem] tracking-[0.2em] uppercase text-gold font-semibold">
                   Your Name
@@ -236,8 +249,7 @@ export default function Contact() {
               </div>
 
               <p className="font-montserrat text-[0.6rem] text-[#666] tracking-wide -mt-2">
-                Clicking "Send Message" will open your email app with all fields
-                pre-filled and addressed to us.
+                Clicking "Send Message" will auto-send your message to us.
               </p>
 
               <button
@@ -249,9 +261,12 @@ export default function Contact() {
                     : "bg-gold text-black hover:bg-gold-light hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(201,168,76,0.35)]"
                 }`}
               >
-                {submitted ? "Opening Email App ✓" : "Send Message"}
+                {sending
+                  ? "Sending..."
+                  : submitted
+                  ? "Message Sent ✓"
+                  : "Send Message"}
               </button>
-
             </form>
           </div>
         </div>
