@@ -1,16 +1,21 @@
-// src/App.jsx
+// App.jsx
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
-import ScrollToTop from './components/ScrollToTop.jsx'
-
 import Home from './pages/Home.jsx'
 import About from './pages/About.jsx'
 import Products from './pages/Products.jsx'
 import Blog from './pages/Blog.jsx'
 import Contact from './pages/Contact.jsx'
+import ScrollToTop from './components/ScrollToTop.jsx'
+
+const pageTransition = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -20 },
+  transition: { duration: 0.5 },
+}
 
 export default function App() {
   const location = useLocation()
@@ -18,20 +23,14 @@ export default function App() {
   return (
     <div className="min-h-screen bg-black text-off-white">
       <Navbar />
-      <ScrollToTop /> {/* ensures every page starts from top */}
+      <ScrollToTop />
 
-      {/* AnimatePresence handles route animations */}
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           <Route
             path="/"
             element={
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.4 }}
-              >
+              <motion.div {...pageTransition}>
                 <Home />
               </motion.div>
             }
@@ -39,12 +38,7 @@ export default function App() {
           <Route
             path="/about"
             element={
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.4 }}
-              >
+              <motion.div {...pageTransition}>
                 <About />
               </motion.div>
             }
@@ -52,12 +46,7 @@ export default function App() {
           <Route
             path="/products"
             element={
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.4 }}
-              >
+              <motion.div {...pageTransition}>
                 <Products />
               </motion.div>
             }
@@ -65,12 +54,7 @@ export default function App() {
           <Route
             path="/blog"
             element={
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.4 }}
-              >
+              <motion.div {...pageTransition}>
                 <Blog />
               </motion.div>
             }
@@ -78,12 +62,7 @@ export default function App() {
           <Route
             path="/contact"
             element={
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.4 }}
-              >
+              <motion.div {...pageTransition}>
                 <Contact />
               </motion.div>
             }

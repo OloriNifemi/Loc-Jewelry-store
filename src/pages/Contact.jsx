@@ -1,37 +1,82 @@
-import { useState } from 'react'
-import { FaWhatsapp } from 'react-icons/fa'
-import { FaInstagram, FaTiktok, FaXTwitter, FaLocationDot, FaPhone, FaClock, FaPenToSquare } from 'react-icons/fa6'
+import { useState } from "react";
+import { FaWhatsapp } from "react-icons/fa";
+import {
+  FaInstagram,
+  FaTiktok,
+  FaXTwitter,
+  FaLocationDot,
+  FaPhone,
+  FaClock,
+  FaPenToSquare,
+} from "react-icons/fa6";
 
-const WA = 'https://wa.me/2349116971778?text=Hi,%20I%20am%20interested%20in%20your%20jewelry'
+const WA =
+  "https://wa.me/2349116971778?text=Hi,%20I%20am%20interested%20in%20your%20jewelry";
+
+const RECIPIENT = "luxurybyolori@gmail.com";
 
 const details = [
-  { Icon: FaPhone,       label: 'Phone',         value: '+234 911 697 1778' },
-  { Icon: FaLocationDot, label: 'Location',       value: 'Lagos, Nigeria' },
-  { Icon: FaClock,       label: 'Hours',          value: 'Mon – Sat: 9am – 7pm WAT' },
-  { Icon: FaPenToSquare, label: 'Custom Orders',  value: 'Available via WhatsApp' },
-]
+  { Icon: FaPhone, label: "Phone", value: "+234 911 697 1778" },
+  { Icon: FaLocationDot, label: "Location", value: "Lagos, Nigeria" },
+  { Icon: FaClock, label: "Hours", value: "Mon – Sat: 9am – 7pm WAT" },
+  {
+    Icon: FaPenToSquare,
+    label: "Custom Orders",
+    value: "Available via WhatsApp",
+  },
+];
 
 const socials = [
-  { Icon: FaInstagram, label: 'Instagram', href: '#' },
-  { Icon: FaTiktok,    label: 'TikTok',    href: '#' },
-  { Icon: FaXTwitter,  label: 'X',         href: '#' },
-]
+  { Icon: FaInstagram, label: "Instagram", href: "#" },
+  { Icon: FaTiktok, label: "TikTok", href: "#" },
+  { Icon: FaXTwitter, label: "X", href: "#" },
+];
 
 export default function Contact() {
-  const [submitted, setSubmitted] = useState(false)
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    contact: "",
+    message: "",
+  });
 
   function handleSubmit(e) {
-    e.preventDefault()
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3500)
+    e.preventDefault();
+
+    const body = [
+      `Name: ${form.name}`,
+      `Email: ${form.email}`,
+      `Phone/Contact: ${form.contact}`,
+      ``,
+      `Message:`,
+      form.message,
+    ].join("\n");
+
+    const mailtoLink =
+      `mailto:${RECIPIENT}` +
+      `?subject=${encodeURIComponent(
+        form.subject || "Inquiry from L.O.C Website"
+      )}` +
+      `&body=${encodeURIComponent(body)}`;
+
+    window.location.href = mailtoLink;
+
+    setSubmitted(true);
+    setTimeout(() => {
+      setSubmitted(false);
+      setForm({ name: "", email: "", subject: "", contact: "", message: "" });
+    }, 3500);
   }
 
   return (
     <div className="pt-20">
       {/* Page header */}
       <div className="py-24 px-[5vw] bg-[#1a1a1a] text-center">
-        <span className="font-montserrat text-[0.6rem] tracking-[0.35em] uppercase text-gold block mb-4">✦ Get in Touch ✦</span>
+        <span className="font-montserrat text-[0.6rem] tracking-[0.35em] uppercase text-gold block mb-4">
+          ✦ Get in Touch ✦
+        </span>
         <h1 className="font-playfair font-bold text-[clamp(2rem,4vw,3.5rem)] leading-snug">
           Connect With <em className="italic text-gold">L.O.C</em>
         </h1>
@@ -40,15 +85,21 @@ export default function Contact() {
 
       <section className="py-20 px-[5vw]">
         <div className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-20">
-
           {/* Left — info */}
           <div>
-            <span className="font-montserrat text-[0.6rem] tracking-[0.35em] uppercase text-gold block mb-4">✦ Reach Us ✦</span>
+            <span className="font-montserrat text-[0.6rem] tracking-[0.35em] uppercase text-gold block mb-4">
+              ✦ Reach Us ✦
+            </span>
+
             <h2 className="font-playfair font-bold text-[2rem] leading-snug mb-6">
-              We'd love to <em className="italic text-gold">hear</em><br />from you
+              We'd love to <em className="italic text-gold">hear</em>
+              <br />
+              from you
             </h2>
+
             <p className="font-cormorant italic text-lg text-[#ccc] leading-[1.8] mb-8">
-              Reach out for inquiries, custom orders, or collaborations. We're always excited to bring your vision to life.
+              Reach out for inquiries, custom orders, or collaborations. We're
+              always excited to bring your vision to life.
             </p>
 
             {/* WhatsApp CTA */}
@@ -73,7 +124,9 @@ export default function Contact() {
                     <span className="font-montserrat text-[0.6rem] tracking-[0.15em] uppercase text-gold font-semibold min-w-[90px]">
                       {label}
                     </span>
-                    <span className="font-montserrat text-[0.85rem] text-[#ccc]">{value}</span>
+                    <span className="font-montserrat text-[0.85rem] text-[#ccc]">
+                      {value}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -84,6 +137,7 @@ export default function Contact() {
               <div className="font-montserrat text-[0.6rem] tracking-[0.2em] uppercase text-gold mb-4 font-semibold">
                 Follow Us
               </div>
+
               <div className="flex gap-3">
                 {socials.map(({ Icon, label, href }) => (
                   <a
@@ -104,6 +158,7 @@ export default function Contact() {
           {/* Right — form */}
           <div>
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+
               <div className="flex flex-col gap-2">
                 <label className="font-montserrat text-[0.6rem] tracking-[0.2em] uppercase text-gold font-semibold">
                   Your Name
@@ -114,7 +169,7 @@ export default function Contact() {
                   placeholder="Amaka Johnson"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="bg-white/4 border border-white/8 text-white px-5 py-4 font-montserrat text-[0.85rem] outline-none rounded-lg transition-all focus:border-gold/50 focus:bg-white/7 placeholder-white/20"
+                  className="bg-white/4 border border-white/8 text-black px-5 py-4 font-montserrat text-[0.85rem] outline-none rounded-lg transition-all focus:border-gold/50 placeholder:text-black/40"
                 />
               </div>
 
@@ -128,7 +183,7 @@ export default function Contact() {
                   placeholder="you@example.com"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="bg-white/4 border border-white/8 text-white px-5 py-4 font-montserrat text-[0.85rem] outline-none rounded-lg transition-all focus:border-gold/50 focus:bg-white/7 placeholder-white/20"
+                  className="bg-white/4 border border-white/8 text-black px-5 py-4 font-montserrat text-[0.85rem] outline-none rounded-lg transition-all focus:border-gold/50 placeholder:text-black/40"
                 />
               </div>
 
@@ -138,10 +193,29 @@ export default function Contact() {
                 </label>
                 <input
                   type="text"
+                  required
                   placeholder="Custom Order Inquiry"
                   value={form.subject}
-                  onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                  className="bg-white/4 border border-white/8 text-white px-5 py-4 font-montserrat text-[0.85rem] outline-none rounded-lg transition-all focus:border-gold/50 focus:bg-white/7 placeholder-white/20"
+                  onChange={(e) =>
+                    setForm({ ...form, subject: e.target.value })
+                  }
+                  className="bg-white/4 border border-white/8 text-black px-5 py-4 font-montserrat text-[0.85rem] outline-none rounded-lg transition-all focus:border-gold/50 placeholder:text-black/40"
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label className="font-montserrat text-[0.6rem] tracking-[0.2em] uppercase text-gold font-semibold">
+                  Phone / Contact
+                </label>
+                <input
+                  type="tel"
+                  required
+                  placeholder="+234 800 000 0000"
+                  value={form.contact}
+                  onChange={(e) =>
+                    setForm({ ...form, contact: e.target.value })
+                  }
+                  className="bg-white/4 border border-white/8 text-black px-5 py-4 font-montserrat text-[0.85rem] outline-none rounded-lg transition-all focus:border-gold/50 placeholder:text-black/40"
                 />
               </div>
 
@@ -151,28 +225,37 @@ export default function Contact() {
                 </label>
                 <textarea
                   rows={6}
-                  placeholder="Tell us about the piece you have in mind, your budget, or any questions you have..."
+                  required
+                  placeholder="Tell us about the piece you have in mind..."
                   value={form.message}
-                  onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  className="bg-white/4 border border-white/8 text-white px-5 py-4 font-montserrat text-[0.85rem] outline-none rounded-lg transition-all focus:border-gold/50 focus:bg-white/7 placeholder-white/20 resize-y"
+                  onChange={(e) =>
+                    setForm({ ...form, message: e.target.value })
+                  }
+                  className="bg-white/4 border border-white/8 text-black px-5 py-4 font-montserrat text-[0.85rem] outline-none rounded-lg transition-all focus:border-gold/50 placeholder:text-black/40 resize-y"
                 />
               </div>
+
+              <p className="font-montserrat text-[0.6rem] text-[#666] tracking-wide -mt-2">
+                Clicking "Send Message" will open your email app with all fields
+                pre-filled and addressed to us.
+              </p>
 
               <button
                 type="submit"
                 className={`mt-2 px-8 py-4 font-montserrat text-[0.7rem] tracking-[0.2em] uppercase font-bold rounded-lg transition-all duration-300
-                  ${submitted
-                    ? 'bg-green-500 text-black cursor-default'
-                    : 'bg-gold text-black hover:bg-gold-light hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(201,168,76,0.35)]'
-                  }`}
+                ${
+                  submitted
+                    ? "bg-green-500 text-black cursor-default"
+                    : "bg-gold text-black hover:bg-gold-light hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(201,168,76,0.35)]"
+                }`}
               >
-                {submitted ? 'Message Sent ✓' : 'Send Message'}
+                {submitted ? "Opening Email App ✓" : "Send Message"}
               </button>
+
             </form>
           </div>
-
         </div>
       </section>
     </div>
-  )
+  );
 }
