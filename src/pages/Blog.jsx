@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { FaWhatsapp } from 'react-icons/fa'
 import { FaCheck, FaXmark } from 'react-icons/fa6'
 import {
   NecklaceSmIcon, RingSmIcon, EarringSmIcon, BraceletSmIcon,
 } from '../components/JewelryIcons.jsx'
+
 
 const WA_CARE = 'https://wa.me/2349116971778?text=Hi,%20I%20need%20advice%20on%20caring%20for%20my%20L.O.C%20jewelry'
 const WA_BLOG = 'https://wa.me/2349116971778?text=Hi,%20I%20saw%20your%20blog%20and%20I%20am%20interested%20in%20jewelry'
@@ -431,11 +432,26 @@ const TABS = [
 ]
 
 export default function Blog() {
+
   const [active, setActive] = useState('types')
+  const tabRef = useRef(null)
+  const contentRef = useRef(null)
+
+  const handleTabClick = (id) => {
+    setActive(id)
+    // Use setTimeout to ensure state is updated before scrolling
+    setTimeout(() => {
+      if (contentRef.current) {
+        contentRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }, 0)
+  }
+
   const { Component } = TABS.find((t) => t.id === active)
 
   return (
     <div className="pt-20 ">
+
       {/* Page header */}
       <div className="py-24 px-[5vw] bg-[#1a1a1a] text-center">
         <span className="font-montserrat text-[0.6rem] tracking-[0.35em] uppercase text-gold block mb-4">✦ Style & Inspiration ✦</span>
@@ -448,13 +464,13 @@ export default function Blog() {
         </p>
       </div>
 
-      {/* Tab bar — hide-scrollbar applied */}
-      <div className="bg-black border-b border-gold/12 sticky top-20 z-40">
+      {/* Tab bar */}
+      <div ref={tabRef} className="bg-black border-b border-gold/12 sticky top-20 z-40">
         <div className="flex overflow-x-auto hide-scrollbar px-[5vw]">
           {TABS.map(({ id, label }) => (
             <button
               key={id}
-              onClick={() => setActive(id)}
+              onClick={() => handleTabClick(id)}
               className={`font-montserrat text-[0.68rem] tracking-[0.18em] uppercase font-semibold
                           px-8 py-5 whitespace-nowrap border-b-2 transition-all duration-300 flex-shrink-0 cursor-pointer bg-transparent
                           ${active === id
@@ -469,36 +485,42 @@ export default function Blog() {
       </div>
 
       {/* Tab content */}
-      <section className="bg-deep py-16 px-[5vw]">
+      <section ref={contentRef} className="bg-deep py-16 px-[5vw]">
         <div key={active} className="animate-fadeIn">
           <Component />
         </div>
 
         {/* Newsletter */}
-<div className="max-w-[1200px] mx-auto mt-20 bg-gradient-to-br from-gold/8 to-gold/3 border border-gold/20 rounded-xl p-12 flex flex-wrap items-center justify-between gap-8 overflow-hidden">
-  <div>
-    <h3 className="font-playfair font-bold text-3xl mb-2">
-      Stay <em className="italic text-gold">Inspired</em>
-    </h3>
-    <p className="text-[#888] text-sm">
-      Join the L.O.C community. Get style tips, new arrivals &amp; exclusive offers.
-    </p>
-  </div>
+        <div className="max-w-[1200px] mx-auto mt-20 bg-gradient-to-br from-gold/8 to-gold/3 border border-gold/20 rounded-xl p-12 flex flex-wrap items-center justify-between gap-8 overflow-hidden">
 
-  <div className="flex justify-center w-full sm:w-auto">
-    <div className="flex w-full max-w-full sm:w-auto">
-      <input
-        type="email"
-        placeholder="Your email address"
-        className="bg-white/5 border border-white/10 border-r-0 text-white px-6 py-3.5 font-montserrat text-[0.8rem] outline-none rounded-l focus:border-gold/50 placeholder-[#888] w-full sm:w-64 transition-colors"
-      />
-      <button className="bg-gold text-black px-6 py-3.5 font-montserrat text-[0.65rem] tracking-[0.18em] uppercase font-bold rounded-r hover:bg-gold-light transition-colors whitespace-nowrap">
-        Subscribe
-      </button>
-    </div>
-  </div>
-</div>
+          <div>
+            <h3 className="font-playfair font-bold text-3xl mb-2">
+              Stay <em className="italic text-gold">Inspired</em>
+            </h3>
+            <p className="text-[#888] text-sm">
+              Join the L.O.C community. Get style tips, new arrivals & exclusive offers.
+            </p>
+          </div>
+
+          <div className="flex justify-center w-full sm:w-auto">
+            <div className="flex w-full max-w-full sm:w-auto">
+
+              <input
+                type="email"
+                placeholder="Your email address"
+                className="bg-white/5 border border-white/10 border-r-0 text-white px-6 py-3.5 font-montserrat text-[0.8rem] outline-none rounded-l focus:border-gold/50 placeholder-[#888] w-full sm:w-64 transition-colors"
+              />
+
+              <button className="bg-gold text-black px-6 py-3.5 font-montserrat text-[0.65rem] tracking-[0.18em] uppercase font-bold rounded-r hover:bg-gold-light transition-colors whitespace-nowrap">
+                Subscribe
+              </button>
+
+            </div>
+          </div>
+
+        </div>
       </section>
+
     </div>
   )
 }
