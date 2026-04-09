@@ -182,7 +182,7 @@ export default function Contact() {
                   placeholder="Amaka Johnson"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="bg-white/4 border border-white/8 text-black px-5 py-4 font-montserrat text-[0.85rem] outline-none rounded-lg transition-all focus:border-gold/50 placeholder:text-black/40"
+                  className="bg-white/4 border border-white/8 text-white px-5 py-4 font-montserrat text-base outline-none rounded-lg transition-all focus:border-gold/50 placeholder:text-white/40"
                 />
               </div>
 
@@ -196,7 +196,7 @@ export default function Contact() {
                   placeholder="you@example.com"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="bg-white/4 border border-white/8 text-black px-5 py-4 font-montserrat text-[0.85rem] outline-none rounded-lg transition-all focus:border-gold/50 placeholder:text-black/40"
+                  className="bg-white/4 border border-white/8 text-white px-5 py-4 font-montserrat text-base outline-none rounded-lg transition-all focus:border-gold/50 placeholder:text-white/40"
                 />
               </div>
 
@@ -212,7 +212,7 @@ export default function Contact() {
                   onChange={(e) =>
                     setForm({ ...form, subject: e.target.value })
                   }
-                  className="bg-white/4 border border-white/8 text-black px-5 py-4 font-montserrat text-[0.85rem] outline-none rounded-lg transition-all focus:border-gold/50 placeholder:text-black/40"
+                  className="bg-white/4 border border-white/8 text-white px-5 py-4 font-montserrat text-base outline-none rounded-lg transition-all focus:border-gold/50 placeholder:text-white/40"
                 />
               </div>
 
@@ -228,7 +228,7 @@ export default function Contact() {
                   onChange={(e) =>
                     setForm({ ...form, contact: e.target.value })
                   }
-                  className="bg-white/4 border border-white/8 text-black px-5 py-4 font-montserrat text-[0.85rem] outline-none rounded-lg transition-all focus:border-gold/50 placeholder:text-black/40"
+                  className="bg-white/4 border border-white/8 text-white px-5 py-4 font-montserrat text-base outline-none rounded-lg transition-all focus:border-gold/50 placeholder:text-white/40"
                 />
               </div>
 
@@ -244,7 +244,7 @@ export default function Contact() {
                   onChange={(e) =>
                     setForm({ ...form, message: e.target.value })
                   }
-                  className="bg-white/4 border border-white/8 text-black px-5 py-4 font-montserrat text-[0.85rem] outline-none rounded-lg transition-all focus:border-gold/50 placeholder:text-black/40 resize-y"
+                  className="bg-white/4 border border-white/8 text-white px-5 py-4 font-montserrat text-base outline-none rounded-lg transition-all focus:border-gold/50 placeholder:text-white/40 resize-y"
                 />
               </div>
 
