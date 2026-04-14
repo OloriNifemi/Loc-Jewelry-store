@@ -5,10 +5,11 @@ import { FaCheck, FaXmark } from 'react-icons/fa6'
 import {
   NecklaceSmIcon, RingSmIcon, EarringSmIcon, BraceletSmIcon,
 } from '../components/JewelryIcons.jsx'
-
+import emailjs from '@emailjs/browser'
 
 const WA_CARE = 'https://wa.me/2349116971778?text=Hi,%20I%20need%20advice%20on%20caring%20for%20my%20L.O.C%20jewelry'
 const WA_BLOG = 'https://wa.me/2349116971778?text=Hi,%20I%20saw%20your%20blog%20and%20I%20am%20interested%20in%20jewelry'
+
 
 /* ─── sub-components ─── */
 
@@ -432,10 +433,46 @@ const TABS = [
 ]
 
 export default function Blog() {
-
   const [active, setActive] = useState('types')
+  const [newsletterEmail, setNewsletterEmail] = useState('')
+  const [subscribed, setSubscribed] = useState(false)
+  const [sending, setSending] = useState(false)
+
   const tabRef = useRef(null)
   const contentRef = useRef(null)
+
+
+  const handleSubscribe = () => {
+    if (!newsletterEmail || !newsletterEmail.includes('@')) return
+
+    setSending(true)
+
+    const templateParams = {
+      email: newsletterEmail,
+    }
+
+    emailjs
+      .send(
+        "service_6zkoewj",
+        "template_334xfgc",
+        templateParams,
+        "dD6N3FmvMo-J2s26W"
+      )
+      .then(
+        (response) => {
+          setSubscribed(true)
+          setSending(false)
+          setNewsletterEmail('')
+
+          setTimeout(() => setSubscribed(false), 3500)
+        },
+        (error) => {
+          console.error("Email send failed:", error)
+          setSending(false)
+          alert("Failed to send. Please try again.")
+        }
+      )
+  }
 
   const handleTabClick = (id) => {
     setActive(id)
@@ -508,11 +545,20 @@ export default function Blog() {
               <input
                 type="email"
                 placeholder="Your email address"
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
                 className="bg-white/5 border border-white/10 border-r-0 text-white px-6 py-3.5 font-montserrat text-[0.8rem] outline-none rounded-l focus:border-gold/50 placeholder-[#888] w-full sm:w-64 transition-colors"
               />
 
-              <button className="bg-gold text-black px-6 py-3.5 font-montserrat text-[0.65rem] tracking-[0.18em] uppercase font-bold rounded-r hover:bg-gold-light transition-colors whitespace-nowrap">
-                Subscribe
+              <button
+                onClick={handleSubscribe}
+                disabled={sending}
+                className={`px-6 py-3.5 font-montserrat text-[0.65rem] tracking-[0.18em] uppercase font-bold rounded-r transition-colors whitespace-nowrap
+                  ${subscribed ? 'bg-green-500 text-black'
+                    : sending ? 'bg-gray-500 text-black'
+                    : 'bg-gold text-black hover:bg-gold-light'}`}
+              >
+                {sending ? 'Sending...' : subscribed ? 'Sent ✓' : 'Subscribe'}
               </button>
 
             </div>

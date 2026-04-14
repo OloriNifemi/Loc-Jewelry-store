@@ -152,20 +152,26 @@ export default function Contact() {
                 Follow Us
               </div>
 
-              <div className="flex gap-3">
-                {socials.map(({ Icon, label, href }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    title={label}
-                    className="w-11 h-11 rounded-full flex items-center justify-center text-[#ccc]
-                               border border-white/10 hover:border-gold hover:text-gold
-                               hover:-translate-y-0.5 transition-all duration-300 no-underline"
-                  >
-                    <Icon size={15} />
-                  </a>
-                ))}
-              </div>
+          <div className="flex gap-3 mt-6">
+            {[
+              { Icon: FaInstagram, link: "https://instagram.com/l.o.c_jewelries" },
+              { Icon: FaTiktok, link: "https://tiktok.com/@l.o.c_jewelries" },
+              { Icon: FaWhatsapp, link: WA },
+            ].map(({ Icon, link }, i) => (
+              <a
+                key={i}
+                href={link}
+                target="_blank"
+                rel="noreferrer"
+                className="w-11 h-11 rounded-full flex items-center justify-center text-[#ccc]
+               border border-white/10 hover:border-gold hover:text-gold
+               hover:-translate-y-0.5 transition-all duration-300 no-underline"
+              >
+                <Icon size={15} />
+              </a>
+            ))}
+          </div>
+
             </div>
           </div>
 
