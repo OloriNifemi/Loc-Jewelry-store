@@ -110,7 +110,7 @@ export default function Home() {
           <p className="text-[#888] text-sm leading-relaxed">Each piece is a celebration of Nigerian culture, heritage, and the modern woman and man who wears it with pride.</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ld:gap-12 max-w-[1200px] mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 max-w-[1200px] mx-auto">
           {products.map((p) => <ProductCard key={p.name} {...p} />)}
         </div>
       </section>
