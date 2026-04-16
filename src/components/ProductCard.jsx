@@ -1,15 +1,27 @@
 import { FaWhatsapp } from 'react-icons/fa'
 import { motion } from 'framer-motion'
 
-const WA_BASE = 'https://wa.me/2349116971778?text=Hi,%20I%20am%20interested%20in%20the%20'
+const WA_BASE = 'https://wa.me/2349116971778?text='
 
 export default function ProductCard({ name, category, price, badge, image, height }) {
-  const waLink = `${WA_BASE}${encodeURIComponent(name)}`
+  // Build a detailed, friendly WhatsApp message
+  const message = [
+    `Hi! 👋 I'm interested in ordering from L.O.C.`,
+    ``,
+    `📦 *Product Details:*`,
+    `• Name: ${name}`,
+    `• Category: ${category}`,
+    `• Price: ${price}`,
+    ``,
+    `Could you please confirm availability and how I can complete my order? Thank you! 🙏`,
+  ].join('\n')
+
+  const waLink = `${WA_BASE}${encodeURIComponent(message)}`
 
   const cardVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-    hover: { scale: 1.03, transition: { duration: 0.3 } }
+    hover: { scale: 1.03, transition: { duration: 0.3 } },
   }
 
   return (
@@ -42,16 +54,15 @@ export default function ProductCard({ name, category, price, badge, image, heigh
         </div>
         <div className="font-playfair text-xl font-semibold mb-1">{name}</div>
         <div className="text-gold font-semibold tracking-wide mb-5">{price}</div>
+
         
-        <a
-          href={waLink}
-          target="_blank"
-          rel="noreferrer"
-          className="flex items-center justify-center gap-2 w-full border border-gold/40 text-gold rounded font-montserrat text-[0.65rem] tracking-[0.18em] uppercase font-semibold py-3 transition-all duration-300 hover:bg-gold hover:text-black hover:border-gold no-underline"
-        >
-          <FaWhatsapp size={14} />
-          Inquire on WhatsApp
-        </a>
+          <a 
+            href={waLink}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center justify-center gap-2 w-full border border-gold/40 text-gold rounded font-montserrat text-[0.65rem] tracking-[0.18em] uppercase font-semibold py-3 transition-all duration-300 hover:bg-gold hover:text-black hover:border-gold no-underline"
+          ><FaWhatsapp size={14} />Inquire on WhatsApp
+          </a>
       </div>
     </motion.div>
   )
