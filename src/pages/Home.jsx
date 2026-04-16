@@ -19,10 +19,10 @@ const WA = 'https://wa.me/2349116971778?text=Hi,%20I%20am%20interested%20in%20yo
 const products = [
   { name: 'Ọlórí Luxe Drips', category: 'Earrings', price: '₦6,500', badge: 'Bestseller', image: SingleEarring1, height:'h-[350px]' },
   { name: 'Ọlórí Minis', category: 'Earrings', price: '₦4,500', badge: null, image: SingleEarring2, height:'h-[350px]' },
-  { name: 'Elegance Bracelet', category: 'Earrings', price: '₦75,000', badge: 'New', image: SingleEarring3, height:'h-[350px]' },
-  { name: 'Royale Drop Earrings', category: 'Earrings', price: '₦65,000', badge: null, image: SingleEarring4, height:'h-[350px]' },
-  { name: 'Lagos Gold Chain', category: 'Earrings', price: '₦110,000', badge: null, image: SingleEarring5, height:'h-[350px]' },
-  { name: 'Heritage Bangle', category: 'Earrings', price: '₦85,000', badge: 'Limited', image: SingleEarring6, height:'h-[350px]' },
+  { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4,500', badge: 'New', image: SingleEarring3, height:'h-[350px]' },
+  { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4,500', badge: null, image: SingleEarring4, height:'h-[350px]' },
+  { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4,500', badge: null, image: SingleEarring5, height:'h-[350px]' },
+  { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4,500', badge: 'Limited', image: SingleEarring6, height:'h-[350px]' },
 ]
 
 const pillars = [
