@@ -74,7 +74,6 @@ export default function Navbar() {
             )}
           </button>
 
-          
           <a  href={WA}
             target="_blank"
             rel="noreferrer"
@@ -109,37 +108,6 @@ export default function Navbar() {
             onClick={() => setOpen(!open)}
             className="flex items-center justify-center w-10 h-10 text-gold
                       border border-gold/30 rounded transition-colors hover:bg-gold/10"
-            aria-label="Toggle menu"
-          >
-            {open ? <FaXmark size={18} /> : <FaBars size={18} />}
-          </button>
-        </div>
-
-        {/* Mobile: cart icon + hamburger */}
-        <div className="md:hidden flex items-center gap-3">
-          <div className="relative">
-            <button
-              onClick={openCartDrawer}
-              className="relative flex items-center justify-center w-10 h-10 text-gold
-              border border-gold/30 rounded transition-colors hover:bg-gold/10"
-              aria-label="Open cart"
-            >
-              <FaCartShopping size={16} />
-              {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 flex items-center justify-center
-                  min-w-[18px] h-[18px] px-1 rounded-full bg-gold text-black
-                  text-[10px] font-bold">
-                  {cartCount}
-                </span>
-              )}
-            </button>
-            <CartPreviewDropdown />
-          </div>
-
-          <button
-            onClick={() => setOpen(!open)}
-            className="flex items-center justify-center w-10 h-10 text-gold
-            border border-gold/30 rounded transition-colors hover:bg-gold/10"
             aria-label="Toggle menu"
           >
             {open ? <FaXmark size={18} /> : <FaBars size={18} />}
@@ -203,7 +171,6 @@ export default function Navbar() {
           </ul>
 
           <div className="px-8 pb-10">
-            
             <a href={WA}
               target="_blank"
               rel="noreferrer"
