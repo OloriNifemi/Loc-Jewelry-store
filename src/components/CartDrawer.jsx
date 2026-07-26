@@ -72,10 +72,11 @@ export default function CartDrawer() {
                           <div className="flex items-center gap-3 mt-2">
                             <button
                               onClick={() => decrementItem(item._id)}
-                              className="w-6 h-6 flex items-center justify-center rounded border border-white/15 text-white hover:border-gold hover:text-gold transition-colors"
+                              className="w-9 h-9 sm:w-6 sm:h-6 flex items-center justify-center rounded border border-white/15 text-white hover:border-gold hover:text-gold transition-colors"
                               aria-label="Decrease quantity"
                             >
-                              <FaMinus size={9} />
+                              <FaMinus size={12} className="sm:hidden" />
+                              <FaMinus size={9} className="hidden sm:block" />
                             </button>
                             <span className="w-5 text-center font-montserrat text-xs text-white">
                               {item.quantity}
