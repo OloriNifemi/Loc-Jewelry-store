@@ -11,11 +11,13 @@ const client = createClient({
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
 
-  const { cartId, productKey, productName, category, price, image } = req.body
+  const { cartId, productKey, productName, category, price, image, color, quantity } = req.body
 
   if (!cartId || !productKey) {
     return res.status(400).json({ error: 'Missing cartId or productKey' })
   }
+
+  const qtyToAdd = Number(quantity) > 0 ? Number(quantity) : 1
 
   try {
     const existing = await client.fetch(
@@ -27,7 +29,7 @@ export default async function handler(req, res) {
     if (existing) {
       result = await client
         .patch(existing._id)
-        .inc({ quantity: 1 })
+        .inc({ quantity: qtyToAdd })
         .commit()
     } else {
       result = await client.create({
@@ -38,7 +40,8 @@ export default async function handler(req, res) {
         category,
         price,
         image,
-        quantity: 1,
+        color,
+        quantity: qtyToAdd,
         createdAt: new Date().toISOString(),
       })
     }

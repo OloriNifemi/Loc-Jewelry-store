@@ -21,10 +21,20 @@ export function CartProvider({ children }) {
   const [cartId] = useState(getOrCreateCartId)
   const [cart, setCart] = useState([])
   const [loading, setLoading] = useState(true)
-  const [toast, setToast] = useState(null) // { message, key }
+  const [toast, setToast] = useState(null)       // simple toast (remove/clear/errors)
+  const [preview, setPreview] = useState(null)   // rich dropdown (on add-to-cart)
+  const [cartDrawerOpen, setCartDrawerOpen] = useState(false)
 
   function showToast(message) {
     setToast({ message, key: Date.now() })
+  }
+
+  function openCartDrawer() {
+    setPreview(null)
+    setCartDrawerOpen(true)
+  }
+  function closeCartDrawer() {
+    setCartDrawerOpen(false)
   }
 
   const fetchCart = useCallback(async () => {
@@ -44,30 +54,45 @@ export function CartProvider({ children }) {
   }, [fetchCart])
 
   async function addToCart(product) {
-    const productKey = `${product.name}-${product.category}`.toLowerCase().replace(/\s+/g, '-')
+    // product: { name, category, price, image, color, quantity }
+    const qty = product.quantity > 0 ? product.quantity : 1
+    const color = product.color || 'Gold'
+    const productKey = `${product.name}-${product.category}-${color}`
+      .toLowerCase()
+      .replace(/\s+/g, '-')
 
-    // Optimistic update — reflect the change instantly
     setCart((prev) => {
       const existing = prev.find((item) => item.productKey === productKey)
       if (existing) {
         return prev.map((item) =>
-          item.productKey === productKey ? { ...item, quantity: item.quantity + 1 } : item
+          item.productKey === productKey
+            ? { ...item, quantity: item.quantity + qty }
+            : item
         )
       }
       return [
         ...prev,
         {
-          _id: `temp-${productKey}`, // replaced once real fetch confirms
+          _id: `temp-${productKey}`,
           productKey,
           productName: product.name,
           category: product.category,
           price: product.price,
           image: product.image,
-          quantity: 1,
+          color,
+          quantity: qty,
         },
       ]
     })
-    showToast(`1 item added to cart`)
+
+    // Show the rich preview dropdown instead of the plain toast
+    setPreview({
+      key: Date.now(),
+      productName: product.name,
+      color,
+      image: product.image,
+      quantity: qty,
+    })
 
     try {
       await fetch('/api/cart-add', {
@@ -80,20 +105,21 @@ export function CartProvider({ children }) {
           category: product.category,
           price: product.price,
           image: product.image,
+          color,
+          quantity: qty,
         }),
       })
-      await fetchCart() // reconcile with real Sanity IDs in the background
+      await fetchCart()
     } catch (err) {
       console.error('Failed to add to cart:', err)
       showToast('Failed to add item — try again')
-      await fetchCart() // roll back to real state on failure
+      await fetchCart()
     }
   }
 
   async function removeFromCart(itemId) {
     const removedItem = cart.find((item) => item._id === itemId)
 
-    // Optimistic update
     setCart((prev) => prev.filter((item) => item._id !== itemId))
     if (removedItem) showToast(`${removedItem.productName} removed from cart`)
 
@@ -106,7 +132,7 @@ export function CartProvider({ children }) {
     } catch (err) {
       console.error('Failed to remove item:', err)
       showToast('Failed to remove item — try again')
-      await fetchCart() // roll back on failure
+      await fetchCart()
     }
   }
 
@@ -115,7 +141,8 @@ export function CartProvider({ children }) {
       `Hi! 👋 I'd like to order the following from L.O.C:`,
       ``,
       ...cart.map(
-        (item) => `• ${item.productName} (${item.category}) x${item.quantity} — ${item.price}`
+        (item) =>
+          `• ${item.productName} (${item.category}, ${item.color}) x${item.quantity} — ${item.price}`
       ),
       ``,
       `💰 Total: ₦${cart
@@ -133,6 +160,8 @@ export function CartProvider({ children }) {
     window.open(`${WA_BASE}${encodeURIComponent(message)}`, '_blank')
 
     setCart([])
+    setPreview(null)
+    setCartDrawerOpen(false)
     showToast('Cart cleared')
 
     try {
@@ -143,7 +172,7 @@ export function CartProvider({ children }) {
       })
     } catch (err) {
       console.error('Failed to clear cart:', err)
-      await fetchCart() // roll back on failure
+      await fetchCart()
     }
   }
 
@@ -152,7 +181,21 @@ export function CartProvider({ children }) {
 
   return (
     <CartContext.Provider
-      value={{ cart, loading, cartCount, cartTotal, addToCart, removeFromCart, clearCart, toast }}
+      value={{
+        cart,
+        loading,
+        cartCount,
+        cartTotal,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        toast,
+        preview,
+        closePreview: () => setPreview(null),
+        cartDrawerOpen,
+        openCartDrawer,
+        closeCartDrawer,
+      }}
     >
       {children}
     </CartContext.Provider>

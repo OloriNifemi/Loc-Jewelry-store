@@ -9,6 +9,7 @@ export default {
     { name: 'category', title: 'Category', type: 'string' },
     { name: 'price', title: 'Price', type: 'string' },
     { name: 'image', title: 'Image URL', type: 'string' },
+    { name: 'color', title: 'Color', type: 'string' },
     { name: 'quantity', title: 'Quantity', type: 'number', initialValue: 1 },
     { name: 'createdAt', title: 'Created At', type: 'datetime' },
   ],

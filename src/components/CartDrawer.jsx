@@ -1,20 +1,20 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { FaWhatsapp, FaX } from 'react-icons/fa6'
+import { FaWhatsapp, FaXmark } from 'react-icons/fa6'
 import { useCart } from '../../context/CartContext.jsx'
 
-export default function CartDrawer({ isOpen, onClose }) {
-  const { cart, loading, cartTotal, removeFromCart, clearCart } = useCart()
+export default function CartDrawer() {
+  const { cart, loading, cartTotal, removeFromCart, clearCart, cartDrawerOpen, closeCartDrawer } = useCart()
 
   return (
     <AnimatePresence>
-      {isOpen && (
+      {cartDrawerOpen && (
         <>
           <motion.div
             className="fixed inset-0 bg-black/60 z-40"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={closeCartDrawer}
           />
           <motion.div
             className="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-[#161616] border-l border-gold/10 z-50 flex flex-col"
@@ -25,8 +25,8 @@ export default function CartDrawer({ isOpen, onClose }) {
           >
             <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
               <h2 className="font-playfair text-xl text-white">Your Cart</h2>
-              <button onClick={onClose} className="text-[#888] hover:text-gold transition-colors">
-                <FaX size={16} />
+              <button onClick={closeCartDrawer} className="text-[#888] hover:text-gold transition-colors">
+                <FaXmark size={16} />
               </button>
             </div>
 
@@ -46,7 +46,7 @@ export default function CartDrawer({ isOpen, onClose }) {
                       />
                       <div className="flex-1">
                         <p className="text-white text-sm font-medium">{item.productName}</p>
-                        <p className="text-[#888] text-xs">{item.category}</p>
+                        <p className="text-[#888] text-xs">{item.category} · {item.color}</p>
                         <p className="text-gold text-sm mt-1">
                           {item.price} × {item.quantity}
                         </p>
