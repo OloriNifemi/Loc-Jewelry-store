@@ -61,8 +61,8 @@ export default function CartPreviewDropdown() {
             <button
               onClick={closePreview}
               className="text-center text-[#888] hover:text-gold text-[0.7rem] font-montserrat tracking-wide mt-1 transition-colors"
-            >
-              Continue Shopping
+              
+            > Continue Shopping
             </button>
           </div>
         </motion.div>

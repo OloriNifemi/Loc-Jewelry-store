@@ -19,6 +19,10 @@ export default async function handler(req, res) {
     return res.status(200).json({ success: true })
   } catch (err) {
     console.error('cart-remove error:', err)
+    // If the document simply doesn't exist (already deleted, or was never real), treat as success
+    if (err?.statusCode === 404 || /not found/i.test(err?.message ?? '')) {
+      return res.status(200).json({ success: true, note: 'Item already gone' })
+    }
     return res.status(500).json({ error: 'Failed to remove item' })
   }
 }

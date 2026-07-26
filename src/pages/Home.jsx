@@ -17,12 +17,12 @@ import JewelryModeledSet from '../../assets/jewelry-modeled-set-4.jpeg'
 const WA = 'https://wa.me/2349116971778?text=Hi,%20I%20am%20interested%20in%20your%20jewelry'
 
 const products = [
-  { name: 'Ọlórí Luxe Drips', category: 'Earrings', price: '₦6,500', badge: 'Bestseller', image: SingleEarring1, height:'h-[350px]' },
-  { name: 'Ọlórí Minis', category: 'Earrings', price: '₦4,500', badge: null, image: SingleEarring2, height:'h-[350px]' },
-  { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4,500', badge: 'New', image: SingleEarring3, height:'h-[350px]' },
-  { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4,500', badge: null, image: SingleEarring4, height:'h-[350px]' },
-  { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4,500', badge: null, image: SingleEarring5, height:'h-[350px]' },
-  { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4,500', badge: 'Limited', image: SingleEarring6, height:'h-[350px]' },
+  { name: 'Ọlórí Luxe Drips', category: 'Earrings', price: '₦6,500', badge: 'Bestseller', colors: { Gold: SingleEarring1 }, singleColor: true,  height:'h-[350px]' },
+  { name: 'Ọlórí Minis', category: 'Earrings', price: '₦4,800', badge: null, colors: { Gold: SingleEarring2, Silver: SingleEarring3 }, height:'h-[350px]' },
+  { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4,500', badge: 'New', colors: { Gold: SingleEarring3, Silver: null }, height:'h-[350px]' },
+  { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4,500', badge: null, colors: { Gold: SingleEarring4, Silver: null }, height:'h-[350px]' },
+  { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4,500', badge: null, colors: { Gold: SingleEarring5, Silver: null }, height:'h-[350px]' },
+  { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4,500', badge: 'Limited', colors: { Gold: null, Silver: SingleEarring6 }, height:'h-[350px]' },
 ]
 
 const pillars = [

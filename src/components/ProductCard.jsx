@@ -2,8 +2,10 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import ProductModal from './ProductModal.jsx'
 
-export default function ProductCard({ name, category, price, badge, image, height }) {
+export default function ProductCard({ name, category, price, badge, colors, height, singleColor }) {
   const [modalOpen, setModalOpen] = useState(false)
+
+  const thumbnail = colors.Gold || colors.Silver
 
   const cardVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -23,7 +25,7 @@ export default function ProductCard({ name, category, price, badge, image, heigh
       >
         <div className="relative h-80 overflow-hidden">
           <motion.img
-            src={image}
+            src={thumbnail}
             alt={name}
             className={`w-full ${height} object-center transition-transform duration-700 group-hover:scale-105`}
             whileHover={{ scale: 1.05 }}
@@ -43,7 +45,7 @@ export default function ProductCard({ name, category, price, badge, image, heigh
 
       {modalOpen && (
         <ProductModal
-          product={{ name, category, price, badge, image }}
+          product={{ name, category, price, badge, colors, singleColor }}
           onClose={() => setModalOpen(false)}
         />
       )}

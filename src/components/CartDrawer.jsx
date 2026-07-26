@@ -3,7 +3,7 @@ import { FaWhatsapp, FaXmark } from 'react-icons/fa6'
 import { useCart } from '../../context/CartContext.jsx'
 
 export default function CartDrawer() {
-  const { cart, loading, cartTotal, removeFromCart, clearCart, cartDrawerOpen, closeCartDrawer } = useCart()
+  const { cart, loading, cartTotal, removeFromCart, clearCart, clearAllItems, cartDrawerOpen, closeCartDrawer } = useCart()
 
   return (
     <AnimatePresence>
@@ -36,30 +36,41 @@ export default function CartDrawer() {
               ) : cart.length === 0 ? (
                 <p className="text-[#888] text-sm">Your cart is empty.</p>
               ) : (
-                <div className="flex flex-col gap-5">
-                  {cart.map((item) => (
-                    <div key={item._id} className="flex gap-4 items-center">
-                      <img
-                        src={item.image}
-                        alt={item.productName}
-                        className="w-16 h-16 object-cover rounded-md border border-white/10"
-                      />
-                      <div className="flex-1">
-                        <p className="text-white text-sm font-medium">{item.productName}</p>
-                        <p className="text-[#888] text-xs">{item.category} · {item.color}</p>
-                        <p className="text-gold text-sm mt-1">
-                          {item.price} × {item.quantity}
-                        </p>
+                <>
+                  <div className="flex justify-end mb-4">
+                    <button
+                      onClick={clearAllItems}
+                      className="text-[#888] hover:text-red-400 text-[11px] uppercase tracking-wide font-montserrat transition-colors"
+                    >
+                      Clear All
+                    </button>
+                  </div>
+
+                  <div className="flex flex-col gap-5">
+                    {cart.map((item) => (
+                      <div key={item._id} className="flex gap-4 items-center">
+                        <img
+                          src={item.image}
+                          alt={item.productName}
+                          className="w-16 h-16 object-cover rounded-md border border-white/10"
+                        />
+                        <div className="flex-1">
+                          <p className="text-white text-sm font-medium">{item.productName}</p>
+                          <p className="text-[#888] text-xs">{item.category} · {item.color}</p>
+                          <p className="text-gold text-sm mt-1">
+                            {item.price} × {item.quantity}
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => removeFromCart(item._id)}
+                          className="text-[#666] hover:text-red-400 text-xs uppercase tracking-wide transition-colors"
+                        >
+                          Remove
+                        </button>
                       </div>
-                      <button
-                        onClick={() => removeFromCart(item._id)}
-                        className="text-[#666] hover:text-red-400 text-xs uppercase tracking-wide transition-colors"
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                </>
               )}
             </div>
 

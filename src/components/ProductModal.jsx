@@ -3,25 +3,38 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { FaXmark, FaMinus, FaPlus } from 'react-icons/fa6'
 import { useCart } from '../../context/CartContext.jsx'
 
-const COLORS = [
-  { name: 'Gold', hex: '#B89C64' },
-  { name: 'Silver', hex: '#C0C0C0' },
-]
+const COLOR_HEX = {
+  Gold: '#B89C64',
+  Silver: '#C0C0C0',
+  Black: '#1a1a1a',
+  'Rose Gold': '#B76E79',
+}
+
+const COLOR_ORDER = ['Gold', 'Silver', 'Black', 'Rose Gold']
 
 export default function ProductModal({ product, onClose }) {
   const { addToCart } = useCart()
-  const [color, setColor] = useState('Gold')
+
+  const colorNames = Object.keys(product.colors)
+  const orderedColors = COLOR_ORDER.filter((c) => colorNames.includes(c))
+  const availableColors = orderedColors.filter((c) => product.colors[c])
+
+  const [color, setColor] = useState(
+    product.singleColor ? colorNames[0] : (availableColors[0] ?? orderedColors[0])
+  )
   const [qty, setQty] = useState(1)
 
-  if (!product) return null
-  const isOutOfStock = product.badge === 'out-of-stock'
+  const currentImage = product.colors[color]
+  const colorInStock = Boolean(currentImage)
+  const isOutOfStock = product.badge === 'out-of-stock' || !colorInStock
 
   function handleAddToCart() {
+    if (!colorInStock) return
     addToCart({
       name: product.name,
       category: product.category,
       price: product.price,
-      image: product.image,
+      image: currentImage,
       color,
       quantity: qty,
     })
@@ -45,8 +58,16 @@ export default function ProductModal({ product, onClose }) {
           transition={{ duration: 0.25 }}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="relative h-72 overflow-hidden">
-            <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+          <div className="relative h-72 overflow-hidden bg-[#0d0d0d]">
+            {colorInStock ? (
+              <img src={currentImage} alt={`${product.name} - ${color}`} className="w-full h-full object-cover" />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center">
+                <p className="text-[#666] text-sm font-montserrat tracking-wide text-center px-8">
+                  {color} for this item is out of stock
+                </p>
+              </div>
+            )}
             {product.badge && (
               <span className="absolute top-4 right-4 bg-gold text-black text-[0.55rem] tracking-[0.15em] uppercase font-bold px-2.5 py-1 rounded-sm">
                 {product.badge}
@@ -68,26 +89,49 @@ export default function ProductModal({ product, onClose }) {
             <div className="font-playfair text-2xl font-semibold mb-1">{product.name}</div>
             <div className="text-gold font-semibold tracking-wide mb-6">{product.price}</div>
 
-            {/* Color selection */}
+            {/* Color display / selection */}
             <div className="mb-6">
               <p className="font-montserrat text-[0.65rem] tracking-[0.15em] uppercase text-[#888] mb-3">
                 Color: <span className="text-white">{color}</span>
+                {!colorInStock && (
+                  <span className="text-red-400 normal-case tracking-normal ml-2">(out of stock)</span>
+                )}
               </p>
-              <div className="flex gap-3">
-                {COLORS.map((c) => (
-                  <button
-                    key={c.name}
-                    onClick={() => setColor(c.name)}
-                    className={`w-8 h-8 rounded-full transition-all duration-200 ${
-                      color === c.name
-                        ? 'ring-2 ring-offset-2 ring-offset-[#161616] ring-gold scale-110'
-                        : 'ring-1 ring-white/20 hover:ring-white/40'
-                    }`}
-                    style={{ backgroundColor: c.hex }}
-                    aria-label={c.name}
-                  />
-                ))}
-              </div>
+
+              {product.singleColor ? (
+                // Single-color: show the one swatch as a static indicator, not clickable
+                <div
+                  className="w-8 h-8 rounded-full ring-1 ring-white/20"
+                  style={{ backgroundColor: COLOR_HEX[color] ?? '#888' }}
+                  aria-label={color}
+                />
+              ) : (
+                // Multi-color: full picker
+                <div className="flex gap-3">
+                  {orderedColors.map((c) => {
+                    const available = Boolean(product.colors[c])
+                    return (
+                      <button
+                        key={c}
+                        onClick={() => setColor(c)}
+                        className={`relative w-8 h-8 rounded-full transition-all duration-200 ${
+                          color === c
+                            ? 'ring-2 ring-offset-2 ring-offset-[#161616] ring-gold scale-110'
+                            : 'ring-1 ring-white/20 hover:ring-white/40'
+                        } ${!available ? 'opacity-30' : ''}`}
+                        style={{ backgroundColor: COLOR_HEX[c] ?? '#888' }}
+                        aria-label={`${c}${!available ? ' (out of stock)' : ''}`}
+                      >
+                        {!available && (
+                          <span className="absolute inset-0 flex items-center justify-center">
+                            <span className="w-full h-px bg-white/70 rotate-45" />
+                          </span>
+                        )}
+                      </button>
+                    )
+                  })}
+                </div>
+              )}
             </div>
 
             {/* Quantity stepper */}
@@ -123,7 +167,7 @@ export default function ProductModal({ product, onClose }) {
                   : 'bg-gold text-black border border-gold hover:bg-transparent hover:text-gold hover:shadow-[0_0_0_1px_rgba(201,168,76,0.6)] active:scale-[0.98]'
                 }`}
             >
-              {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
+              {!colorInStock ? `${color} Out of Stock` : isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
             </button>
           </div>
         </motion.div>

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useCallback } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react'
 
 const CartContext = createContext(null)
 const WA_BASE = 'https://wa.me/2349116971778?text='
@@ -21,9 +21,13 @@ export function CartProvider({ children }) {
   const [cartId] = useState(getOrCreateCartId)
   const [cart, setCart] = useState([])
   const [loading, setLoading] = useState(true)
-  const [toast, setToast] = useState(null)       // simple toast (remove/clear/errors)
-  const [preview, setPreview] = useState(null)   // rich dropdown (on add-to-cart)
+  const [toast, setToast] = useState(null)
+  const [preview, setPreview] = useState(null)
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false)
+
+  // Bumped whenever we clear the cart, so any in-flight fetch started
+  // before the clear gets ignored if it resolves after.
+  const requestVersion = useRef(0)
 
   function showToast(message) {
     setToast({ message, key: Date.now() })
@@ -38,14 +42,17 @@ export function CartProvider({ children }) {
   }
 
   const fetchCart = useCallback(async () => {
+    const myVersion = requestVersion.current
     try {
       const res = await fetch(`/api/cart-get?cartId=${cartId}`)
       const data = await res.json()
+      // If a clear happened while this request was in flight, discard the result
+      if (myVersion !== requestVersion.current) return
       setCart(Array.isArray(data) ? data : [])
     } catch (err) {
       console.error('Failed to fetch cart:', err)
     } finally {
-      setLoading(false)
+      if (myVersion === requestVersion.current) setLoading(false)
     }
   }, [cartId])
 
@@ -54,12 +61,13 @@ export function CartProvider({ children }) {
   }, [fetchCart])
 
   async function addToCart(product) {
-    // product: { name, category, price, image, color, quantity }
     const qty = product.quantity > 0 ? product.quantity : 1
     const color = product.color || 'Gold'
     const productKey = `${product.name}-${product.category}-${color}`
       .toLowerCase()
       .replace(/\s+/g, '-')
+
+    requestVersion.current++ // invalidate any older in-flight fetchCart
 
     setCart((prev) => {
       const existing = prev.find((item) => item.productKey === productKey)
@@ -85,7 +93,6 @@ export function CartProvider({ children }) {
       ]
     })
 
-    // Show the rich preview dropdown instead of the plain toast
     setPreview({
       key: Date.now(),
       productName: product.name,
@@ -123,6 +130,10 @@ export function CartProvider({ children }) {
     setCart((prev) => prev.filter((item) => item._id !== itemId))
     if (removedItem) showToast(`${removedItem.productName} removed from cart`)
 
+    if (itemId.startsWith('temp-')) {
+      return
+    }
+
     try {
       await fetch('/api/cart-remove', {
         method: 'POST',
@@ -159,9 +170,29 @@ export function CartProvider({ children }) {
     const message = buildWhatsAppMessage()
     window.open(`${WA_BASE}${encodeURIComponent(message)}`, '_blank')
 
+    requestVersion.current++ // invalidate any in-flight fetchCart
     setCart([])
     setPreview(null)
     setCartDrawerOpen(false)
+    showToast('Cart cleared')
+
+    try {
+      await fetch('/api/cart-clear', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cartId }),
+      })
+    } catch (err) {
+      console.error('Failed to clear cart:', err)
+      await fetchCart()
+    }
+  }
+
+  async function clearAllItems() {
+    if (cart.length === 0) return
+
+    requestVersion.current++ // invalidate any in-flight fetchCart
+    setCart([])
     showToast('Cart cleared')
 
     try {
@@ -189,6 +220,7 @@ export function CartProvider({ children }) {
         addToCart,
         removeFromCart,
         clearCart,
+        clearAllItems,
         toast,
         preview,
         closePreview: () => setPreview(null),
