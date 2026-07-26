@@ -6,23 +6,17 @@ import {
   NecklaceIcon, RingIcon, BraceletIcon,
   EarringIcon, ChainIcon, BangleIcon,
 } from '../components/JewelryIcons.jsx'
-import SingleEarring1 from '../../assets/Single-earrings-1.jpeg'
-import SingleEarring2 from '../../assets/Single-earrings-2.jpeg'
-import SingleEarring3 from '../../assets/Single-earrings-3.jpeg'
-import SingleEarring4 from '../../assets/Single-earrings-4.jpeg'
-import SingleEarring5 from '../../assets/Single-earrings-5.jpeg'
+import Necklace7 from '../../assets/layered-necklace.jpeg'
+import MaleBracelet1 from '../../assets/Male-bracelet-1.jpeg'
 import SingleEarring6 from '../../assets/Single-earrings-6.jpeg'
 import JewelryModeledSet from '../../assets/jewelry-modeled-set-4.jpeg'
 
 const WA = 'https://wa.me/2349116971778?text=Hi,%20I%20am%20interested%20in%20your%20jewelry'
 
 const products = [
-  { name: 'Ọlórí Luxe Drips', category: 'Earrings', price: '₦6,500', badge: 'Bestseller', colors: { Gold: SingleEarring1 }, singleColor: true,  height:'h-[350px]' },
-  { name: 'Ọlórí Minis', category: 'Earrings', price: '₦4,800', badge: null, colors: { Gold: SingleEarring2, Silver: SingleEarring3 }, height:'h-[350px]' },
-  { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4,500', badge: 'New', colors: { Gold: SingleEarring3, Silver: null }, height:'h-[350px]' },
-  { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4,500', badge: null, colors: { Gold: SingleEarring4, Silver: null }, height:'h-[350px]' },
-  { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4,500', badge: null, colors: { Gold: SingleEarring5, Silver: null }, height:'h-[350px]' },
+  { name: 'Elegance Bracelet', category: 'Bracelet', price: '₦15,000', badge: 'Bestseller', colors: { Gold: null, Silver: null, Black: MaleBracelet1 }, height:'h-[350px]' },
   { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4,500', badge: 'Limited', colors: { Gold: null, Silver: SingleEarring6 }, height:'h-[350px]' },
+  { name: 'Ọlórí Luxe Drips', category: 'Necklace', price: '₦16,000', badge: 'Bestseller', colors: { Gold: Necklace7, Silver: null }, singleColor: true, height:'h-[350px]' },
 ]
 
 const pillars = [
@@ -36,68 +30,167 @@ export default function Home() {
   return (
     <>
       {/* ── HERO ── */}
-      <section className="relative min-h-screen max-md:pb-20 flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center overflow-hidden pt-28 lg:pt-0 pb-16 lg:pb-0">
         {/* Background */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_80%_at_70%_50%,rgba(201,168,76,0.07)_0%,transparent_60%),radial-gradient(ellipse_40%_60%_at_20%_80%,rgba(201,168,76,0.04)_0%,transparent_60%),linear-gradient(160deg,#0a0a0a_40%,#111008_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,#080808_0%,#111111_100%)]" />
 
-        {/* Animated lines */}
-        {[
-          'h-[60%] left-[15%] top-[20%] animate-lineFloat1',
-          'h-[40%] left-[85%] top-[30%] animate-lineFloat2',
-          'h-[50%] left-[50%] top-[10%] animate-lineFloat3',
-        ].map((cls, i) => (
-          <div key={i} className={`absolute w-px bg-gradient-to-b from-transparent via-gold/30 to-transparent ${cls}`} />
-        ))}
-
-        {/* Diamonds */}
-        {[
-          'top-[20%] left-[15%] animate-diamondPulse1',
-          'top-[80%] left-[85%] animate-diamondPulse2',
-          'top-[10%] left-[50%] animate-diamondPulse3',
-        ].map((cls, i) => (
-          <div key={i} className={`absolute w-1.5 h-1.5 bg-gold rotate-45 ${cls}`} />
-        ))}
+        {/* Gold glow */}
+        <div className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/10 blur-[180px]" />
 
         {/* Watermark */}
-        <div className="absolute font-playfair font-bold pointer-events-none select-none text-transparent"
-          style={{ fontSize: 'clamp(8rem,20vw,18rem)', WebkitTextStroke: '1px rgba(201,168,76,0.08)', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', whiteSpace: 'nowrap' }}>
+        <h2
+          className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 select-none font-playfair font-bold text-transparent lg:block"
+          style={{
+            fontSize: "clamp(10rem,22vw,20rem)",
+            WebkitTextStroke: "1px rgba(201,168,76,.06)",
+            letterSpacing: ".15em",
+          }}
+        >
           L.O.C
-        </div>
+        </h2>
 
-        {/* Content */}
-        <div className="relative z-10 text-center px-[5vw] animate-heroFadeIn">
-          <div className="inline-block font-montserrat text-[0.65rem] tracking-[0.3em] uppercase text-gold border border-gold/40 px-6 py-2 mb-8 animate-heroFadeIn2">
-            ✦ Lagos, Nigeria · Est. 2024 ✦
+        <div className="relative z-10 mx-auto grid w-full max-w-[1280px] grid-cols-1 items-center gap-12 sm:gap-14 lg:grid-cols-[1.05fr_.95fr] lg:gap-20 px-[5vw]">
+
+          {/* TEXT */}
+          <div className="text-center lg:text-left">
+
+            <span className="inline-flex items-center gap-2 rounded-full border border-gold/20 bg-gold/5 px-4 sm:px-5 py-1.5 sm:py-2 font-montserrat text-[10px] sm:text-[11px] uppercase tracking-[0.25em] sm:tracking-[0.35em] text-gold">
+              Est. 2024 · Lagos, Nigeria
+            </span>
+
+            <h1
+              className="mt-6 sm:mt-8 lg:mt-16 font-playfair font-bold leading-[0.98] sm:leading-[0.95] text-white break-words"
+              style={{
+                fontSize: "clamp(2rem,8vw,6.3rem)",
+              }}
+            >
+              Jewelry
+              <br />
+              that speaks
+              <br />
+              <span className="italic text-gold">before you do.</span>
+            </h1>
+
+            <p className="mt-6 sm:mt-8 max-w-lg mx-auto lg:mx-0 text-sm sm:text-lg leading-7 sm:leading-8 text-white/65">
+              Premium non-tarnish jewelry crafted for everyday elegance.
+              Designed to elevate every outfit with timeless pieces you'll
+              love wearing again and again.
+            </p>
+
+            <div className=" w-full mt-8 sm:mt-10 flex flex-wrap justify-center lg:justify-start gap-5 sm:gap-4">
+              <Link
+                to="/products"
+                className="rounded-full bg-gold py-4 lg:w-[40%] max-md:w-[50%] text-center font-montserrat text-[11px] sm:text-xs font-semibold uppercase tracking-[.18em] sm:tracking-[.22em] text-black transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(201,168,76,.35)]"
+              >
+                Shop Collection
+              </Link>
+
+              
+              <a  href={WA}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-full border border-white/15 py-4 lg:w-[40%] max-md:w-[50%] text-center font-montserrat text-[11px] sm:text-xs uppercase tracking-[.18em] sm:tracking-[.22em] text-white transition-all duration-300 hover:border-gold hover:text-gold"
+              >
+                WhatsApp Us
+              </a>
+            </div>
+
+            {/* Premium Features */}
+            <div className="mt-10 sm:mt-14 flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4">
+
+              <div className="rounded-full border border-white/10 bg-white/5 px-4 sm:px-5 py-2 sm:py-3">
+                <p className="font-montserrat text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-gold">
+                  Premium Finish
+                </p>
+              </div>
+
+              <div className="rounded-full border border-white/10 bg-white/5 px-4 sm:px-5 py-2 sm:py-3">
+                <p className="font-montserrat text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-gold">
+                  Non Tarnish
+                </p>
+              </div>
+
+              <div className="rounded-full border border-white/10 bg-white/5 px-4 sm:px-5 py-2 sm:py-3">
+                <p className="font-montserrat text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-gold">
+                  Nationwide Delivery
+                </p>
+              </div>
+
+            </div>
           </div>
 
-          <h1 className="font-playfair font-bold leading-[1.1] mb-6 animate-heroFadeIn4"
-            style={{ fontSize: 'clamp(2.5rem,6vw,5.5rem)' }}>
-            Elegance <em className="italic text-gold">Redefined</em><br />for the Modern Nigerian
-          </h1>
+          {/* IMAGE */}
+          <div className="relative flex items-center justify-center">
 
-          <p className="font-cormorant italic text-[#ccc] max-w-xl mx-auto mb-10 leading-[1.7] animate-heroFadeIn6"
-            style={{ fontSize: 'clamp(1rem,2vw,1.35rem)' }}>
-            Luxury jewelry crafted to inspire confidence, style, and sophistication — every piece a statement of who you are.
-          </p>
+            {/* Main image */}
+            <div className="relative aspect-[4/5] w-full max-w-[340px] sm:max-w-[400px] lg:w-[430px] lg:max-w-none overflow-hidden rounded-[1.5rem] sm:rounded-[2rem] border border-gold/15">
 
-          <div className="flex gap-4 justify-center flex-wrap animate-heroFadeIn8">
-            <Link to="/products"
-              className="bg-gold text-black px-9 py-4 font-montserrat text-[0.7rem] tracking-[0.2em] uppercase font-bold rounded-sm transition-all duration-300 hover:bg-gold-light hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(201,168,76,0.35)] no-underline">
-              Shop Collection
-            </Link>
-            <a href={WA} target="_blank" rel="noreferrer"
-              className="border border-white/30 text-white px-9 py-4 font-montserrat text-[0.7rem] tracking-[0.2em] uppercase font-semibold rounded-sm transition-all duration-300 hover:border-gold hover:text-gold hover:-translate-y-0.5 no-underline">
-              Inquire on WhatsApp
-            </a>
+              <img
+                src={JewelryModeledSet}
+                alt="Luxury Jewelry"
+                className="h-full w-full object-cover transition-transform duration-[6000ms] hover:scale-110"
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+            </div>
+
+            {/* Floating Product */}
+            <div className="absolute -left-4 sm:-left-8 lg:-left-10 top-10 sm:top-16 lg:top-20 w-32 sm:w-44 lg:w-52 rounded-xl sm:rounded-2xl border border-gold/15 bg-[#101010]/90 p-3 sm:p-4 backdrop-blur-xl shadow-2xl">
+
+              <img
+                src={SingleEarring6}
+                alt=""
+                className="h-24 sm:h-36 lg:h-44 w-full rounded-lg sm:rounded-xl object-cover"
+              />
+
+              <p className="mt-2 sm:mt-4 font-playfair text-sm sm:text-lg text-white">
+                Ọlórí Midi
+              </p>
+
+              <span className="text-xs sm:text-sm text-gold">
+                ₦4,500
+              </span>
+            </div>
+
+            {/* Floating Badge */}
+            <div className="absolute -right-3 sm:-right-5 lg:-right-6 bottom-6 sm:bottom-8 lg:bottom-10 rounded-xl sm:rounded-2xl border border-gold/15 bg-[#111]/95 px-5 sm:px-7 lg:px-8 py-3 sm:py-5 lg:py-6 backdrop-blur-xl">
+
+              <p className="font-playfair text-xl sm:text-2xl lg:text-3xl font-semibold text-gold">
+                100+
+              </p>
+
+              <span className="mt-1 block font-montserrat text-[8px] sm:text-[9px] lg:text-[10px] uppercase tracking-[0.18em] sm:tracking-[0.22em] text-white/60">
+                Happy Clients
+              </span>
+
+            </div>
+
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 flex  -translate-x-1/2 justify-center  flex-col items-center gap-2 font-montserrat text-[0.55rem] tracking-[0.25em] uppercase text-[#888] animate-heroFadeIn12">
-          <div className="w-px h-10 bg-gradient-to-b from-gold to-transparent animate-scrollPulse" />
-          <span>Scroll</span>
+        {/* Scroll */}
+        <div className="absolute bottom-6 sm:bottom-10 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 sm:gap-3">
+          <div className="h-10 sm:h-12 w-px bg-gradient-to-b from-gold to-transparent" />
+          <span className="font-montserrat text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-white/40">
+            Scroll
+          </span>
         </div>
       </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {/* ── FEATURED COLLECTION ── */}
       <section className="bg-deep py-28 px-[5vw]">
