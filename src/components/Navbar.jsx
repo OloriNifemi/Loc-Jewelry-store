@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { FaWhatsapp } from 'react-icons/fa'
-import { FaBars, FaXmark } from 'react-icons/fa6'
+import { FaBars, FaXmark, FaCartShopping } from 'react-icons/fa6'
+import { useCart } from '../../context/CartContext.jsx'
+import CartDrawer from './CartDrawer.jsx'
 
 const WA = 'https://wa.me/2349116971778?text=Hi,%20I%20am%20interested%20in%20your%20jewelry'
 
@@ -16,6 +18,8 @@ const links = [
 export default function Navbar() {
   const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
+  const [cartOpen, setCartOpen] = useState(false)
+  const { cartCount } = useCart()
 
   function close() { setOpen(false) }
 
@@ -50,28 +54,64 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Desktop WhatsApp CTA */}
-        <a
-          href={WA}
-          target="_blank"
-          rel="noreferrer"
-          className="hidden md:flex items-center gap-2 bg-gold text-black px-5 py-2.5 rounded-sm
-                     font-montserrat text-[0.68rem] tracking-[0.14em] uppercase font-bold
-                     transition-all duration-300 hover:bg-gold-light hover:-translate-y-px no-underline"
-        >
-          <FaWhatsapp size={14} />
-          WhatsApp Us
-        </a>
+        {/* Desktop right side: cart + WhatsApp CTA */}
+        <div className="hidden md:flex items-center gap-4">
+          <button
+            onClick={() => setCartOpen(true)}
+            className="relative flex items-center justify-center w-10 h-10 text-gold
+                       border border-gold/30 rounded transition-colors hover:bg-gold/10"
+            aria-label="Open cart"
+          >
+            <FaCartShopping size={16} />
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 flex items-center justify-center
+                                min-w-[18px] h-[18px] px-1 rounded-full bg-gold text-black
+                                text-[10px] font-bold">
+                {cartCount}
+              </span>
+            )}
+          </button>
 
-        {/* Hamburger button — mobile only */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden flex items-center justify-center w-10 h-10 text-gold
-                     border border-gold/30 rounded transition-colors hover:bg-gold/10"
-          aria-label="Toggle menu"
-        >
-          {open ? <FaXmark size={18} /> : <FaBars size={18} />}
-        </button>
+          
+          <a  href={WA}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-2 bg-gold text-black px-5 py-2.5 rounded-sm
+                       font-montserrat text-[0.68rem] tracking-[0.14em] uppercase font-bold
+                       transition-all duration-300 hover:bg-gold-light hover:-translate-y-px no-underline"
+          >
+            <FaWhatsapp size={14} />
+            WhatsApp Us
+          </a>
+        </div>
+
+        {/* Mobile: cart icon + hamburger */}
+        <div className="md:hidden flex items-center gap-3">
+          <button
+            onClick={() => setCartOpen(true)}
+            className="relative flex items-center justify-center w-10 h-10 text-gold
+                       border border-gold/30 rounded transition-colors hover:bg-gold/10"
+            aria-label="Open cart"
+          >
+            <FaCartShopping size={16} />
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 flex items-center justify-center
+                                min-w-[18px] h-[18px] px-1 rounded-full bg-gold text-black
+                                text-[10px] font-bold">
+                {cartCount}
+              </span>
+            )}
+          </button>
+
+          <button
+            onClick={() => setOpen(!open)}
+            className="flex items-center justify-center w-10 h-10 text-gold
+                       border border-gold/30 rounded transition-colors hover:bg-gold/10"
+            aria-label="Toggle menu"
+          >
+            {open ? <FaXmark size={18} /> : <FaBars size={18} />}
+          </button>
+        </div>
 
       </nav>
 
@@ -132,8 +172,8 @@ export default function Navbar() {
 
           {/* WhatsApp CTA at bottom of drawer */}
           <div className="px-8 pb-10">
-            <a
-              href={WA}
+            
+            <a  href={WA}
               target="_blank"
               rel="noreferrer"
               onClick={close}
@@ -151,6 +191,9 @@ export default function Navbar() {
 
         </div>
       </div>
+
+      {/* ── Cart drawer ── */}
+      <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
     </>
   )
 }

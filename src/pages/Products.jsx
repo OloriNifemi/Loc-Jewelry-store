@@ -35,7 +35,7 @@ const products = [
   { name: 'Ọlórí Luxe Drips', category: 'Earrings', price: '₦6,500', badge: 'Bestseller', image: SingleEarring1, height:'h-[350px]' },
   { name: 'Ọlórí Minis', category: 'Earrings', price: '₦4,500', badge: null, image: SingleEarring2, height:'h-[350px]' },
   { name: 'Ọlórí Midi', category: 'Earrings', price: '₦3,000', badge: 'New', image: SingleEarring3, height:'h-[350px]' },
-  { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4,500', badge: null, image: SingleEarring4, height:'h-[350px]' },
+  { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4+,500', badge: null, image: SingleEarring4, height:'h-[350px]' },
   { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4,500', badge: null, image: SingleEarring5, height:'h-[350px]' },
   { name: 'Ọlórí Midi', category: 'Earrings', price: '₦4,500', badge: 'Limited', image: SingleEarring6, height:'h-[350px]' },
   { name: 'Ọlórí Luxe Drips', category: 'Earrings', price: '₦4,500', badge: 'Bestseller', image: SingleEarring7, height:'h-[350px]' },
