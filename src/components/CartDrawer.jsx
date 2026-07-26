@@ -1,9 +1,19 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { FaWhatsapp, FaXmark } from 'react-icons/fa6'
+import { FaWhatsapp, FaXmark, FaTrash, FaMinus } from 'react-icons/fa6'
 import { useCart } from '../../context/CartContext.jsx'
 
 export default function CartDrawer() {
-  const { cart, loading, cartTotal, removeFromCart, clearCart, clearAllItems, cartDrawerOpen, closeCartDrawer } = useCart()
+  const {
+    cart,
+    loading,
+    cartTotal,
+    decrementItem,
+    removeFromCart,
+    clearCart,
+    clearAllItems,
+    cartDrawerOpen,
+    closeCartDrawer,
+  } = useCart()
 
   return (
     <AnimatePresence>
@@ -48,24 +58,36 @@ export default function CartDrawer() {
 
                   <div className="flex flex-col gap-5">
                     {cart.map((item) => (
-                      <div key={item._id} className="flex gap-4 items-center">
+                      <div key={item._id} className="flex gap-4 items-start">
                         <img
                           src={item.image}
                           alt={item.productName}
-                          className="w-16 h-16 object-cover rounded-md border border-white/10"
+                          className="w-16 h-16 object-cover rounded-md border border-white/10 shrink-0"
                         />
-                        <div className="flex-1">
-                          <p className="text-white text-sm font-medium">{item.productName}</p>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-white text-sm font-medium truncate">{item.productName}</p>
                           <p className="text-[#888] text-xs">{item.category} · {item.color}</p>
-                          <p className="text-gold text-sm mt-1">
-                            {item.price} × {item.quantity}
-                          </p>
+                          <p className="text-gold text-sm mt-1">{item.price}</p>
+
+                          <div className="flex items-center gap-3 mt-2">
+                            <button
+                              onClick={() => decrementItem(item._id)}
+                              className="w-6 h-6 flex items-center justify-center rounded border border-white/15 text-white hover:border-gold hover:text-gold transition-colors"
+                              aria-label="Decrease quantity"
+                            >
+                              <FaMinus size={9} />
+                            </button>
+                            <span className="w-5 text-center font-montserrat text-xs text-white">
+                              {item.quantity}
+                            </span>
+                          </div>
                         </div>
                         <button
                           onClick={() => removeFromCart(item._id)}
-                          className="text-[#666] hover:text-red-400 text-xs uppercase tracking-wide transition-colors"
+                          className="text-[#666] hover:text-red-400 transition-colors mt-1 shrink-0"
+                          aria-label="Remove item entirely"
                         >
-                          Remove
+                          <FaTrash size={13} />
                         </button>
                       </div>
                     ))}

@@ -25,8 +25,6 @@ export function CartProvider({ children }) {
   const [preview, setPreview] = useState(null)
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false)
 
-  // Bumped whenever we clear the cart, so any in-flight fetch started
-  // before the clear gets ignored if it resolves after.
   const requestVersion = useRef(0)
 
   function showToast(message) {
@@ -46,7 +44,6 @@ export function CartProvider({ children }) {
     try {
       const res = await fetch(`/api/cart-get?cartId=${cartId}`)
       const data = await res.json()
-      // If a clear happened while this request was in flight, discard the result
       if (myVersion !== requestVersion.current) return
       setCart(Array.isArray(data) ? data : [])
     } catch (err) {
@@ -67,7 +64,7 @@ export function CartProvider({ children }) {
       .toLowerCase()
       .replace(/\s+/g, '-')
 
-    requestVersion.current++ // invalidate any older in-flight fetchCart
+    requestVersion.current++
 
     setCart((prev) => {
       const existing = prev.find((item) => item.productKey === productKey)
@@ -127,6 +124,7 @@ export function CartProvider({ children }) {
   async function removeFromCart(itemId) {
     const removedItem = cart.find((item) => item._id === itemId)
 
+    requestVersion.current++
     setCart((prev) => prev.filter((item) => item._id !== itemId))
     if (removedItem) showToast(`${removedItem.productName} removed from cart`)
 
@@ -143,6 +141,39 @@ export function CartProvider({ children }) {
     } catch (err) {
       console.error('Failed to remove item:', err)
       showToast('Failed to remove item — try again')
+      await fetchCart()
+    }
+  }
+
+  async function decrementItem(itemId) {
+    const item = cart.find((i) => i._id === itemId)
+    if (!item) return
+
+    requestVersion.current++
+
+    setCart((prev) => {
+      if (item.quantity <= 1) {
+        return prev.filter((i) => i._id !== itemId)
+      }
+      return prev.map((i) =>
+        i._id === itemId ? { ...i, quantity: i.quantity - 1 } : i
+      )
+    })
+
+    if (itemId.startsWith('temp-')) {
+      return
+    }
+
+    try {
+      await fetch('/api/cart-decrement', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ itemId }),
+      })
+      await fetchCart()
+    } catch (err) {
+      console.error('Failed to decrement item:', err)
+      showToast('Failed to update quantity — try again')
       await fetchCart()
     }
   }
@@ -170,7 +201,7 @@ export function CartProvider({ children }) {
     const message = buildWhatsAppMessage()
     window.open(`${WA_BASE}${encodeURIComponent(message)}`, '_blank')
 
-    requestVersion.current++ // invalidate any in-flight fetchCart
+    requestVersion.current++
     setCart([])
     setPreview(null)
     setCartDrawerOpen(false)
@@ -191,7 +222,7 @@ export function CartProvider({ children }) {
   async function clearAllItems() {
     if (cart.length === 0) return
 
-    requestVersion.current++ // invalidate any in-flight fetchCart
+    requestVersion.current++
     setCart([])
     showToast('Cart cleared')
 
@@ -219,6 +250,7 @@ export function CartProvider({ children }) {
         cartTotal,
         addToCart,
         removeFromCart,
+        decrementItem,
         clearCart,
         clearAllItems,
         toast,
