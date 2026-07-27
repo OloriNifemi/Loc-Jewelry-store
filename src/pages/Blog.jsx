@@ -33,7 +33,7 @@ function Swatch({ gradient, label }) {
 
 function JewelTypeCard({ icon: Icon, name, tagline, desc, swatches, tip }) {
   return (
-    <div className="bg-gold/4 border border-gold/12 rounded-xl p-7 mb-6 transition-all hover:bg-gold/8 hover:border-gold/25">
+    <div className="bg-gold/4 border border-gold/12 rounded-2xl p-7 mb-6 transition-all hover:bg-gold/8 hover:border-gold/25">
       <div className="flex items-center gap-4 mb-4">
         <div className="w-14 h-14 bg-gold/10 border border-gold/30 rounded-lg flex items-center justify-center flex-shrink-0">
           <Icon />
@@ -55,7 +55,7 @@ function JewelTypeCard({ icon: Icon, name, tagline, desc, swatches, tip }) {
 
 function CareStep({ num, title, desc }) {
   return (
-    <div className="flex gap-6 items-start p-6 bg-white/2 border border-white/5 rounded-xl mb-4 transition-colors hover:bg-gold/4">
+    <div className="flex gap-6 items-start p-6 bg-white/2 border border-white/5 rounded-2xl mb-4 transition-colors hover:bg-gold/4">
       <div className="font-playfair text-4xl text-gold/30 font-bold leading-none flex-shrink-0 min-w-[40px]">{num}</div>
       <div>
         <h4 className="font-playfair text-lg font-semibold mb-1">{title}</h4>
@@ -67,7 +67,7 @@ function CareStep({ num, title, desc }) {
 
 function TrendCard({ num, name, tagline, desc, tip }) {
   return (
-    <div className="bg-gold/4 border-l-[3px] border-gold border border-gold/12 rounded-xl p-7 mb-6">
+    <div className="bg-gold/4 border-l-[3px] border-gold border border-gold/12 rounded-2xl p-7 mb-6">
       <div className="flex items-center gap-4 mb-3">
         <div className="font-playfair text-4xl text-gold/30 font-bold leading-none min-w-[40px]">{String(num).padStart(2,'0')}</div>
         <div>
@@ -212,7 +212,7 @@ function TabElevate() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
         {cards.map(({ title, text, bg }) => (
-          <div key={title} className="bg-[#1a1a1a] border border-gold/8 rounded-xl overflow-hidden">
+          <div key={title} className="bg-[#1a1a1a] border border-gold/8 rounded-2xl overflow-hidden">
             <div className={`h-28 flex items-center justify-center bg-gradient-to-br ${bg} relative`}>
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(201,168,76,0.1),transparent_60%)]" />
             </div>
@@ -241,7 +241,7 @@ function TabElevate() {
       </h3>
       <div className="space-y-3">
         {metalRules.map(({ gradient, border, name, rule }) => (
-          <div key={name} className={`flex items-center gap-4 p-4 bg-gold/4 rounded-xl border-l-2 ${border}`}>
+          <div key={name} className={`flex items-center gap-4 p-4 bg-gold/4 rounded-2xl border-l-2 ${border}`}>
             <div className={`w-6 h-6 rounded-full flex-shrink-0 border border-white/10 ${gradient}`} />
             <div className="font-montserrat text-[0.8rem]">
               <strong className="text-white">{name}</strong>
@@ -303,7 +303,7 @@ function TabMaintain() {
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-        <div className="bg-green-500/5 border border-green-500/15 rounded-xl p-6">
+        <div className="bg-green-500/5 border border-green-500/15 rounded-2xl p-6">
           <h4 className="font-montserrat text-[0.72rem] tracking-[0.2em] uppercase text-green-400 mb-4">✓ Do This</h4>
           <ul className="space-y-2">
             {dos.map((d) => (
@@ -314,7 +314,7 @@ function TabMaintain() {
             ))}
           </ul>
         </div>
-        <div className="bg-red-500/5 border border-red-500/15 rounded-xl p-6">
+        <div className="bg-red-500/5 border border-red-500/15 rounded-2xl p-6">
           <h4 className="font-montserrat text-[0.72rem] tracking-[0.2em] uppercase text-red-400 mb-4">✕ Never Do This</h4>
           <ul className="space-y-2">
             {donts.map((d) => (
@@ -330,7 +330,7 @@ function TabMaintain() {
       <TipBox title="✦ L.O.C Care Promise">
         Every L.O.C piece is designed and finished to last years with proper care. If you ever have questions about maintaining your specific piece, message us directly on WhatsApp.
         <a href={WA_CARE} target="_blank" rel="noreferrer"
-          className="inline-flex items-center gap-2 mt-4 bg-gold text-black px-5 py-2.5 rounded font-montserrat text-[0.65rem] tracking-[0.15em] uppercase font-bold no-underline hover:bg-gold-light transition-colors">
+          className="inline-flex items-center gap-2 mt-4 bg-gold text-black px-5 py-4 rounded-full font-montserrat text-[0.65rem] tracking-[0.15em] uppercase font-bold no-underline hover:bg-gold-light transition-colors">
           <FaWhatsapp size={13} /> Ask Us on WhatsApp
         </a>
       </TipBox>
@@ -381,7 +381,7 @@ function TabTrends() {
       </h3>
       <div className="space-y-3 mb-12">
         {occasions.map(({ label, detail }) => (
-          <div key={label} className="flex items-center gap-4 p-4 bg-gold/4 rounded-xl">
+          <div key={label} className="flex items-center gap-4 p-4 bg-gold/4 rounded-2xl">
             <span className="text-gold text-lg">✦</span>
             <div className="font-montserrat text-[0.82rem]">
               <strong className="text-white">{label}</strong>
@@ -391,18 +391,18 @@ function TabTrends() {
         ))}
       </div>
 
-      <div className="text-center p-12 bg-gold/4 border border-gold/15 rounded-xl">
+      <div className="text-center p-12 bg-gold/4 border border-gold/15 rounded-2xl">
         <h3 className="font-playfair text-2xl font-semibold mb-3">
           Ready to Find Your <em className="italic text-gold">Signature Piece?</em>
         </h3>
         <p className="text-[#888] text-sm mb-6">Browse the L.O.C Collection or speak directly with our team about custom designs.</p>
         <div className="flex gap-4 justify-center flex-wrap">
           <Link to="/products"
-            className="bg-gold text-black px-9 py-4 font-montserrat text-[0.7rem] tracking-[0.2em] uppercase font-bold rounded-sm transition-all hover:bg-gold-light no-underline">
+            className="bg-gold text-black px-9 py-4 font-montserrat text-[0.7rem] tracking-[0.2em] uppercase font-bold rounded-full transition-all hover:bg-gold-light no-underline">
             Shop Collection
           </Link>
           <a href={WA_BLOG} target="_blank" rel="noreferrer"
-            className="border border-white/30 text-white px-9 py-4 font-montserrat text-[0.7rem] tracking-[0.2em] uppercase font-semibold rounded-sm transition-all hover:border-gold hover:text-gold no-underline">
+            className="border border-white/30 text-white px-9 py-4 font-montserrat text-[0.7rem] tracking-[0.2em] uppercase font-semibold rounded-full transition-all hover:border-gold hover:text-gold no-underline">
             Inquire on WhatsApp
           </a>
         </div>
@@ -413,7 +413,7 @@ function TabTrends() {
 
 function ArticleHero({ bg, subtitle, svg }) {
   return (
-    <div className={`w-full h-64 rounded-xl mb-8 relative overflow-hidden flex items-center justify-center bg-gradient-to-br ${bg}`}>
+    <div className={`w-full h-64 rounded-2xl mb-8 relative overflow-hidden flex items-center justify-center bg-gradient-to-br ${bg}`}>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,rgba(201,168,76,0.12),transparent_65%)]" />
       <div className="relative z-10">{svg}</div>
       <div className="absolute bottom-5 left-0 right-0 text-center">
@@ -508,12 +508,14 @@ export default function Blog() {
             <button
               key={id}
               onClick={() => handleTabClick(id)}
-              className={`font-montserrat text-[0.68rem] tracking-[0.18em] uppercase font-semibold
-                          px-8 py-5 whitespace-nowrap border-b-2 transition-all duration-300 flex-shrink-0 cursor-pointer bg-transparent
-                          ${active === id
-                            ? 'text-gold border-gold'
-                            : 'text-[#888] border-transparent hover:text-gold-light'
-                          }`}
+              className=
+              {`font-montserrat text-[0.68rem] tracking-[0.18em] uppercase font-semibold
+                px-8 py-5 whitespace-nowrap border-b-2 transition-all duration-300 flex-shrink-0 cursor-pointer bg-transparent
+                ${active === id
+                  ? 'text-gold border-gold'
+                  : 'text-[#888] border-transparent hover:text-gold-light'
+                }`
+              }
             >
               {label}
             </button>
@@ -528,7 +530,7 @@ export default function Blog() {
         </div>
 
         {/* Newsletter */}
-        <div className="max-w-[1200px] mx-auto mt-20 bg-gradient-to-br from-gold/8 to-gold/3 border border-gold/20 rounded-xl p-12 flex flex-wrap items-center justify-between gap-8 overflow-hidden">
+        <div className="max-w-[1200px] mx-auto mt-20 bg-gradient-to-br from-gold/8 to-gold/3 border border-gold/20 rounded-2xl p-12 flex flex-wrap items-center justify-between gap-8 overflow-hidden">
 
           <div>
             <h3 className="font-playfair font-bold text-3xl mb-2">
@@ -544,19 +546,22 @@ export default function Blog() {
 
               <input
                 type="email"
-                placeholder="Your email address"
+                placeholder="Email address"
                 value={newsletterEmail}
                 onChange={(e) => setNewsletterEmail(e.target.value)}
-                className="bg-white/5 border border-white/10 border-r-0 text-white px-6 py-3.5 font-montserrat text-[0.8rem] outline-none rounded-l focus:border-gold/50 placeholder-[#888] w-full sm:w-64 transition-colors"
+                className="bg-white/5 border border-white/10 border-r-0 text-white px-6 py-4 font-montserrat text-[0.8rem] outline-none rounded-l-full focus:border-gold/50 placeholder-[#888] w-full sm:w-64 transition-colors"
               />
 
               <button
                 onClick={handleSubscribe}
                 disabled={sending}
-                className={`px-6 py-3.5 font-montserrat text-[0.65rem] tracking-[0.18em] uppercase font-bold rounded-r transition-colors whitespace-nowrap
+                className=
+                {`px-6 py-3.5 font-montserrat text-[0.65rem] tracking-[0.18em] uppercase font-bold rounded-r-full transition-colors whitespace-nowrap
                   ${subscribed ? 'bg-green-500 text-black'
                     : sending ? 'bg-gray-500 text-black'
-                    : 'bg-gold text-black hover:bg-gold-light'}`}
+                    : 'bg-gold text-black hover:bg-gold-light'
+                  }`
+                }
               >
                 {sending ? 'Sending...' : subscribed ? 'Sent ✓' : 'Subscribe'}
               </button>

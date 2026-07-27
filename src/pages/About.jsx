@@ -36,13 +36,13 @@ export default function About() {
               <p>Our craft is guided by one belief: that every Nigerian deserves to wear jewelry that mirrors their worth. We source only the finest materials, collaborating with skilled artisans to create pieces that transcend trends.</p>
             </div>
 
-            <div className="flex gap-4 flex-wrap mt-10">
+            <div className="max-md:w-full flex gap-4 flex-wrap mt-10">
               <Link to="/products"
-                className="bg-gold text-black px-9 py-4 font-montserrat text-[0.7rem] tracking-[0.2em] uppercase font-bold rounded-sm transition-all duration-300 hover:bg-gold-light hover:-translate-y-0.5 no-underline">
+                className="bg-gold text-black px-9 py-4 max-md:w-full max-md:text-center font-montserrat text-[0.7rem] tracking-[0.2em] uppercase font-bold rounded-full transition-all duration-300 hover:bg-gold-light hover:-translate-y-0.5 no-underline">
                 Explore Our Products
               </Link>
               <Link to="/blog"
-                className="border border-white/30 text-white px-9 py-4 font-montserrat text-[0.7rem] tracking-[0.2em] uppercase font-semibold rounded-sm transition-all duration-300 hover:border-gold hover:text-gold no-underline">
+                className="border border-white/30 text-white px-9 py-4 max-md:w-full max-md:text-center  font-montserrat text-[0.7rem] tracking-[0.2em] uppercase font-semibold rounded-full transition-all duration-300 hover:border-gold hover:text-gold no-underline">
                 Read Our Blog
               </Link>
             </div>
@@ -50,7 +50,7 @@ export default function About() {
 
           {/* Values + Testimonials */}
           <div>
-            <div className="bg-gradient-to-br from-[#111008] to-[#1a1a0a] border border-gold/15 rounded-xl p-10 mb-8">
+            <div className="bg-gradient-to-br from-[#111008] to-[#1a1a0a] border border-gold/15 rounded-2xl p-10 mb-8">
               <span className="font-montserrat text-[0.6rem] tracking-[0.35em] uppercase text-gold block mb-5">Our Values</span>
               <div className="space-y-4">
                 {values.map(({ symbol, title, desc }) => (
@@ -73,7 +73,7 @@ export default function About() {
               <div className="space-y-4">
                 {testimonials.map(({ text, author }) => (
                   <div key={author}
-                    className="bg-gold/4 border border-gold/12 border-l-[3px] border-l-gold rounded-r-xl p-6 transition-colors hover:bg-gold/8">
+                    className="bg-gold/4 border border-gold/12 border-l-[3px] border-l-gold rounded-r-2xl p-6 transition-colors hover:bg-gold/8">
                     <FaQuoteLeft className="text-gold/30 text-4xl mb-3" />
                     <p className="font-cormorant italic text-[1.05rem] text-[#ccc] leading-[1.7] mb-3">{text}</p>
                     <div className="font-montserrat text-[0.65rem] tracking-[0.15em] uppercase text-gold font-semibold">

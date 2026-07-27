@@ -2,10 +2,7 @@ import { Link } from 'react-router-dom'
 import { FaWhatsapp } from 'react-icons/fa'
 import { FaStar, FaHeart, FaClock, FaCircleCheck } from 'react-icons/fa6'
 import ProductCard from '../components/ProductCard.jsx'
-import {
-  NecklaceIcon, RingIcon, BraceletIcon,
-  EarringIcon, ChainIcon, BangleIcon,
-} from '../components/JewelryIcons.jsx'
+import { NecklaceIcon, RingIcon, BraceletIcon, EarringIcon, ChainIcon, BangleIcon, } from '../components/JewelryIcons.jsx'
 import Necklace7 from '../../assets/layered-necklace.jpeg'
 import MaleBracelet1 from '../../assets/Male-bracelet-1.jpeg'
 import SingleEarring6 from '../../assets/Single-earrings-6.jpeg'
@@ -29,7 +26,7 @@ const pillars = [
 export default function Home() {
   return (
     <>
-      {/* ── HERO ── */}
+      {/*------------------------------------------------------------------------ HERO------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ */}
       <section className="relative min-h-screen flex items-center overflow-hidden pt-28 lg:pt-0 pb-16 lg:pb-0">
         {/* Background */}
         <div className="absolute inset-0 bg-[linear-gradient(180deg,#080808_0%,#111111_100%)]" />
@@ -85,7 +82,6 @@ export default function Home() {
                 Shop Collection
               </Link>
 
-              
               <a  href={WA}
                 target="_blank"
                 rel="noreferrer"
@@ -96,21 +92,21 @@ export default function Home() {
             </div>
 
             {/* Premium Features */}
-            <div className="mt-10 sm:mt-14 flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4">
+            <div className="lg:mt-10 mt-14 lg:mb-10 mb-5 flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4">
 
-              <div className="rounded-full border border-white/10 bg-white/5 px-4 sm:px-5 py-2 sm:py-3">
+              <div className="rounded-full border border-white/10 bg-white/5 px-4 sm:px-5 py-3">
                 <p className="font-montserrat text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-gold">
                   Premium Finish
                 </p>
               </div>
 
-              <div className="rounded-full border border-white/10 bg-white/5 px-4 sm:px-5 py-2 sm:py-3">
+              <div className="rounded-full border border-white/10 bg-white/5 px-4 sm:px-5 py-3">
                 <p className="font-montserrat text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-gold">
                   Non Tarnish
                 </p>
               </div>
 
-              <div className="rounded-full border border-white/10 bg-white/5 px-4 sm:px-5 py-2 sm:py-3">
+              <div className="rounded-full border border-white/10 bg-white/5 px-4 sm:px-5 py-3">
                 <p className="font-montserrat text-[9px] sm:text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-gold">
                   Nationwide Delivery
                 </p>
@@ -128,6 +124,8 @@ export default function Home() {
               <img
                 src={JewelryModeledSet}
                 alt="Luxury Jewelry"
+                loading="eager"
+                fetchpriority="high"
                 className="h-full w-full object-cover transition-transform duration-[6000ms] hover:scale-110"
               />
 
@@ -135,12 +133,14 @@ export default function Home() {
             </div>
 
             {/* Floating Product */}
-            <div className="absolute -left-4 sm:-left-8 lg:-left-10 top-10 sm:top-16 lg:top-20 w-32 sm:w-44 lg:w-52 rounded-xl sm:rounded-2xl border border-gold/15 bg-[#101010]/90 p-3 sm:p-4 backdrop-blur-xl shadow-2xl">
+            <div className="absolute -left-4 sm:-left-8 lg:-left-10 top-10 sm:top-16 lg:top-20 w-32 sm:w-44 lg:w-52 rounded-2xl border border-gold/15 bg-[#101010]/90 p-3 sm:p-4 backdrop-blur-xl shadow-2xl">
 
               <img
                 src={SingleEarring6}
-                alt=""
-                className="h-24 sm:h-36 lg:h-44 w-full rounded-lg sm:rounded-xl object-cover"
+                alt="Ọlórí Midi earrings"
+                loading="eager"
+                fetchpriority="high"
+                className="h-24 sm:h-36 lg:h-44 w-full rounded-2xl object-cover"
               />
 
               <p className="mt-2 sm:mt-4 font-playfair text-sm sm:text-lg text-white">
@@ -153,7 +153,7 @@ export default function Home() {
             </div>
 
             {/* Floating Badge */}
-            <div className="absolute -right-3 sm:-right-5 lg:-right-6 bottom-6 sm:bottom-8 lg:bottom-10 rounded-xl sm:rounded-2xl border border-gold/15 bg-[#111]/95 px-5 sm:px-7 lg:px-8 py-3 sm:py-5 lg:py-6 backdrop-blur-xl">
+            <div className="absolute -right-3 sm:-right-5 lg:-right-6 bottom-6 sm:bottom-8 lg:bottom-10 rounded-2xl border border-gold/15 bg-[#111]/95 px-5 sm:px-7 lg:px-8 py-3 sm:py-5 lg:py-6 backdrop-blur-xl">
 
               <p className="font-playfair text-xl sm:text-2xl lg:text-3xl font-semibold text-gold">
                 100+
@@ -167,32 +167,9 @@ export default function Home() {
 
           </div>
         </div>
-
-        {/* Scroll */}
-        <div className="absolute bottom-6 sm:bottom-10 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 sm:gap-3">
-          <div className="h-10 sm:h-12 w-px bg-gradient-to-b from-gold to-transparent" />
-          <span className="font-montserrat text-[9px] sm:text-[10px] uppercase tracking-[0.3em] text-white/40">
-            Scroll
-          </span>
-        </div>
       </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      {/* ── FEATURED COLLECTION ── */}
+      {/* --------------------------------------------------------------------FEATURED COLLECTION ------------------------------------------------------------------------------------------------------------------------------------*/}
       <section className="bg-deep py-28 px-[5vw]">
         <div className="text-center max-w-xl mx-auto mb-16">
           <span className="font-montserrat text-[0.6rem] tracking-[0.35em] uppercase text-gold mb-4 block">✦ Curated for You ✦</span>
@@ -204,7 +181,7 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 max-w-[1200px] mx-auto">
-          {products.map((p) => <ProductCard key={p.name} {...p} />)}
+          {products.map((p, i) => <ProductCard key={`${p.name}-${i}`} {...p} />)}
         </div>
       </section>
 
@@ -214,7 +191,7 @@ export default function Home() {
 
           {/* Visual */}
           <div className="relative">
-            <div className="w-full aspect-[4/5] bg-[url('/assets/jewelry-modeled-set-4.jpeg')] bg-cover lg:bg-fit bg-center rounded-xl border border-gold/15 flex items-center justify-center overflow-hidden">
+            <div className="w-full aspect-[4/5] bg-[url('/assets/jewelry-modeled-set-4.jpeg')] bg-cover lg:bg-fit bg-center rounded-2xl border border-gold/15 flex items-center justify-center overflow-hidden">
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,rgba(201,168,76,0.1),transparent_60%)]" />
               <div className="absolute inset-6 border border-gold/15 rounded-lg">
                 {['tl','tr','bl','br'].map((pos) => (
@@ -225,15 +202,9 @@ export default function Home() {
                     ${pos==='br' ? 'bottom-2 right-2 border-b border-r' : ''}`} />
                 ))}
               </div>
-              {/* <svg width="140" height="140" viewBox="0 0 140 140" fill="none" className="relative z-10">
-                <circle cx="70" cy="70" r="55" stroke="#c9a84c" strokeWidth="1.5" strokeDasharray="6 4" opacity="0.4"/>
-                <circle cx="70" cy="70" r="44" stroke="#c9a84c" strokeWidth="2" opacity="0.6"/>
-                <circle cx="70" cy="70" r="30" stroke="#c9a84c" strokeWidth="1" opacity="0.3"/>
-                <path d="M70 40 L75 58 L95 58 L80 70 L86 88 L70 77 L54 88 L60 70 L45 58 L65 58 Z" fill="#c9a84c" opacity="0.9"/>
-              </svg> */}
             </div>
             {/* Stat badge */}
-            <div className="absolute -bottom-6 lg:-right-6 -right-4 bg-gold text-black p-6 rounded-xl text-center min-w-[120px]">
+            <div className="absolute -bottom-6 lg:-right-6 -right-4 bg-gold text-black p-6 rounded-2xl text-center min-w-[120px]">
               <span className="font-playfair text-3xl font-bold block leading-none">500+</span>
               <span className="font-montserrat text-[0.55rem] tracking-[0.15em] uppercase font-bold">Happy Clients</span>
             </div>
@@ -253,7 +224,7 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-5 mb-10">
               {pillars.map(({ Icon, title, text }) => (
                 <div key={title} className="flex items-start gap-3">
-                  <div className="w-9 h-9 bg-gold/10 border border-gold/20 rounded flex items-center justify-center flex-shrink-0">
+                  <div className="w-9 h-9 bg-gold/10 border border-gold/20 rounded-full flex items-center justify-center flex-shrink-0">
                     <Icon size={16} className="text-gold" />
                   </div>
                   <div>
@@ -265,7 +236,7 @@ export default function Home() {
             </div>
 
             <Link to="/about"
-              className="inline-block bg-gold text-black px-9 py-4 font-montserrat text-[0.7rem] tracking-[0.2em] uppercase font-bold rounded-sm transition-all duration-300 hover:bg-gold-light hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(201,168,76,0.35)] no-underline">
+              className="inline-block bg-gold text-black px-9 py-4 font-montserrat text-[0.7rem] tracking-[0.2em] uppercase font-bold rounded-full transition-all duration-300 hover:bg-gold-light hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(201,168,76,0.35)] no-underline">
               Learn More About Us
             </Link>
           </div>

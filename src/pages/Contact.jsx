@@ -121,7 +121,7 @@ export default function Contact() {
               href={WA}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-3 bg-[#25D366] text-black px-8 py-4 rounded-lg font-montserrat text-[0.8rem] tracking-[0.1em] uppercase font-bold mb-8 no-underline transition-all duration-300 hover:bg-[#22c55e] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(37,211,102,0.3)] w-fit"
+              className="flex items-center gap-3 bg-[#25D366] text-black px-8 py-4 rounded-full font-montserrat text-[0.8rem] tracking-[0.1em] uppercase font-bold mb-8 no-underline transition-all duration-300 hover:bg-[#22c55e] hover:-translate-y-0.5 hover:shadow-[0_8px_24px_rgba(37,211,102,0.3)] w-fit"
             >
               <FaWhatsapp size={22} />
               Message Us on WhatsApp
@@ -131,7 +131,7 @@ export default function Contact() {
             <div className="mb-8 divide-y divide-white/5">
               {details.map(({ Icon, label, value }) => (
                 <div key={label} className="flex items-center gap-4 py-4">
-                  <div className="w-9 h-9 bg-gold/10 border border-gold/20 rounded flex items-center justify-center flex-shrink-0">
+                  <div className="w-9 h-9 bg-gold/10 border border-gold/20 rounded-full flex items-center justify-center flex-shrink-0">
                     <Icon size={14} className="text-gold" />
                   </div>
                   <div className="flex gap-4 items-center">
@@ -188,7 +188,7 @@ export default function Contact() {
                   placeholder="Amaka Johnson"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  className="bg-white/25 border border-white/30 text-gray-100 px-5 py-4 font-montserrat text-base outline-none rounded-lg transition-all focus:border-gold/60 focus:bg-white/30 placeholder:text-gray-300"
+                  className="bg-white/25 border border-white/30 text-gray-100 px-5 py-4 font-montserrat text-base outline-none rounded-full transition-all focus:border-gold/60 focus:bg-white/30 placeholder:text-gray-300"
                 />
               </div>
 
@@ -202,7 +202,7 @@ export default function Contact() {
                   placeholder="you@example.com"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  className="bg-white/25 border border-white/30 text-gray-100 px-5 py-4 font-montserrat text-base outline-none rounded-lg transition-all focus:border-gold/60 focus:bg-white/30 placeholder:text-gray-300"
+                  className="bg-white/25 border border-white/30 text-gray-100 px-5 py-4 font-montserrat text-base outline-none rounded-full transition-all focus:border-gold/60 focus:bg-white/30 placeholder:text-gray-300"
                 />
               </div>
 
@@ -218,7 +218,7 @@ export default function Contact() {
                   onChange={(e) =>
                     setForm({ ...form, subject: e.target.value })
                   }
-                  className="bg-white/25 border border-white/30 text-gray-100 px-5 py-4 font-montserrat text-base outline-none rounded-lg transition-all focus:border-gold/60 focus:bg-white/30 placeholder:text-gray-300"
+                  className="bg-white/25 border border-white/30 text-gray-100 px-5 py-4 font-montserrat text-base outline-none rounded-full transition-all focus:border-gold/60 focus:bg-white/30 placeholder:text-gray-300"
                 />
               </div>
 
@@ -234,7 +234,7 @@ export default function Contact() {
                   onChange={(e) =>
                     setForm({ ...form, contact: e.target.value })
                   }
-                  className="bg-white/25 border border-white/30 text-gray-100 px-5 py-4 font-montserrat text-base outline-none rounded-lg transition-all focus:border-gold/60 focus:bg-white/30 placeholder:text-gray-300"
+                  className="bg-white/25 border border-white/30 text-gray-100 px-5 py-4 font-montserrat text-base outline-none rounded-full transition-all focus:border-gold/60 focus:bg-white/30 placeholder:text-gray-300"
                 />
               </div>
 
@@ -250,7 +250,7 @@ export default function Contact() {
                   onChange={(e) =>
                     setForm({ ...form, message: e.target.value })
                   }
-                  className="bg-white/25 border border-white/30 text-gray-100 px-5 py-4 font-montserrat text-base outline-none rounded-lg transition-all focus:border-gold/60 focus:bg-white/30 placeholder:text-gray-300 resize-y"
+                  className="bg-white/25 border border-white/30 text-gray-100 px-5 py-4 font-montserrat text-base outline-none rounded-2xl transition-all focus:border-gold/60 focus:bg-white/30 placeholder:text-gray-300 resize-y"
                 />
               </div>
 
@@ -260,7 +260,7 @@ export default function Contact() {
 
               <button
                 type="submit"
-                className={`mt-2 px-8 py-4 font-montserrat text-[0.7rem] tracking-[0.2em] uppercase font-bold rounded-lg transition-all duration-300
+                className={`mt-2 px-8 py-4 font-montserrat text-[0.7rem] tracking-[0.2em] uppercase font-bold rounded-full transition-all duration-300
                 ${
                   submitted
                     ? "bg-green-500 text-black cursor-default"

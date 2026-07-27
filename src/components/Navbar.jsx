@@ -61,14 +61,14 @@ export default function Navbar() {
           <button
             onClick={openCartDrawer}
             className="relative flex items-center justify-center w-10 h-10 text-gold
-                      border border-gold/30 rounded transition-colors hover:bg-gold/10"
+            border border-gold/30 rounded-full transition-colors hover:bg-gold/10"
             aria-label="Open cart"
           >
             <FaCartShopping size={16} />
             {cartCount > 0 && (
               <span className="absolute -top-2 -right-2 flex items-center justify-center
-                                min-w-[18px] h-[18px] px-1 rounded-full bg-gold text-black
-                                text-[10px] font-bold">
+                  min-w-[18px] h-[18px] px-1 rounded-full bg-gold text-black
+                  text-[10px] font-bold">
                 {cartCount}
               </span>
             )}
@@ -77,9 +77,9 @@ export default function Navbar() {
           <a  href={WA}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-2 bg-gold text-black px-5 py-2.5 rounded-sm
-                      font-montserrat text-[0.68rem] tracking-[0.14em] uppercase font-bold
-                      transition-all duration-300 hover:bg-gold-light hover:-translate-y-px no-underline"
+            className="flex items-center gap-2 bg-gold text-black px-5 py-4 rounded-full
+            font-montserrat text-[0.68rem] tracking-[0.14em] uppercase font-bold
+            transition-all duration-300 hover:bg-gold-light hover:-translate-y-px no-underline"
           >
             <FaWhatsapp size={14} />
             WhatsApp Us
@@ -91,14 +91,13 @@ export default function Navbar() {
           <button
             onClick={openCartDrawer}
             className="relative flex items-center justify-center w-10 h-10 text-gold
-                      border border-gold/30 rounded transition-colors hover:bg-gold/10"
+            border border-gold/30 rounded-full transition-colors hover:bg-gold/10"
             aria-label="Open cart"
           >
             <FaCartShopping size={16} />
             {cartCount > 0 && (
               <span className="absolute -top-2 -right-2 flex items-center justify-center
-                                min-w-[18px] h-[18px] px-1 rounded-full bg-gold text-black
-                                text-[10px] font-bold">
+                min-w-[18px] h-[18px] px-1 rounded-full bg-gold text-black text-[10px] font-bold">
                 {cartCount}
               </span>
             )}
@@ -107,7 +106,7 @@ export default function Navbar() {
           <button
             onClick={() => setOpen(!open)}
             className="flex items-center justify-center w-10 h-10 text-gold
-                      border border-gold/30 rounded transition-colors hover:bg-gold/10"
+                      border border-gold/30 rounded-full transition-colors hover:bg-gold/10"
             aria-label="Toggle menu"
           >
             {open ? <FaXmark size={18} /> : <FaBars size={18} />}

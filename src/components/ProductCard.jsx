@@ -5,7 +5,7 @@ import ProductModal from './ProductModal.jsx'
 export default function ProductCard({ name, category, price, badge, colors, height, singleColor }) {
   const [modalOpen, setModalOpen] = useState(false)
 
-  const thumbnail = colors.Gold || colors.Silver
+  const thumbnail = Object.values(colors).find((img) => img)
 
   const cardVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -17,7 +17,7 @@ export default function ProductCard({ name, category, price, badge, colors, heig
     <>
       <motion.div
         onClick={() => setModalOpen(true)}
-        className="group bg-[#1a1a1a] rounded-xl overflow-hidden border border-gold/8 transition-all duration-500 lg:w-[350px] cursor-pointer hover:shadow-[0_24px_60px_rgba(0,0,0,0.6),0_0_0_1px_rgba(201,168,76,0.2)]"
+        className="group bg-[#1a1a1a] rounded-2xl overflow-hidden border border-gold/8 transition-all duration-500 lg:w-[350px] cursor-pointer hover:shadow-[0_24px_60px_rgba(0,0,0,0.6),0_0_0_1px_rgba(201,168,76,0.2)]"
         variants={cardVariants}
         initial="hidden"
         animate="visible"

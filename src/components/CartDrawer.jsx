@@ -62,7 +62,7 @@ export default function CartDrawer() {
                         <img
                           src={item.image}
                           alt={item.productName}
-                          className="w-16 h-16 object-cover rounded-md border border-white/10 shrink-0"
+                          className="w-16 h-16 object-cover rounded-full border border-white/10 shrink-0"
                         />
                         <div className="flex-1 min-w-0">
                           <p className="text-white text-sm font-medium truncate">{item.productName}</p>
@@ -72,7 +72,7 @@ export default function CartDrawer() {
                           <div className="flex items-center gap-3 mt-2">
                             <button
                               onClick={() => decrementItem(item._id)}
-                              className="w-9 h-9 sm:w-6 sm:h-6 flex items-center justify-center rounded border border-white/15 text-white hover:border-gold hover:text-gold transition-colors"
+                              className="w-9 h-9 sm:w-6 sm:h-6 flex items-center justify-center rounded-full border border-white/15 text-white hover:border-gold hover:text-gold transition-colors"
                               aria-label="Decrease quantity"
                             >
                               <FaMinus size={12} className="sm:hidden" />
@@ -105,7 +105,7 @@ export default function CartDrawer() {
                 </div>
                 <button
                   onClick={clearCart}
-                  className="flex items-center justify-center gap-2 w-full bg-gold text-black rounded font-montserrat text-[0.7rem] tracking-[0.15em] uppercase font-semibold py-3 hover:opacity-90 transition-opacity"
+                  className="flex items-center justify-center gap-2 w-full bg-gold text-black rounded-full font-montserrat text-[0.7rem] tracking-[0.15em] uppercase font-semibold py-4 hover:opacity-90 transition-opacity"
                 >
                   <FaWhatsapp size={14} />
                   Checkout via WhatsApp

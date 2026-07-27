@@ -51,7 +51,7 @@ export default function ProductModal({ product, onClose }) {
         onClick={onClose}
       >
         <motion.div
-          className="bg-[#161616] border border-gold/15 rounded-xl w-full max-w-md overflow-hidden"
+          className="bg-[#161616] border border-gold/15 rounded-2xl w-full max-w-md overflow-hidden"
           initial={{ opacity: 0, scale: 0.95, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 10 }}
@@ -69,7 +69,7 @@ export default function ProductModal({ product, onClose }) {
               </div>
             )}
             {product.badge && (
-              <span className="absolute top-4 right-4 bg-gold text-black text-[0.55rem] tracking-[0.15em] uppercase font-bold px-2.5 py-1 rounded-sm">
+              <span className="absolute top-4 right-4 bg-gold text-black text-[0.55rem] tracking-[0.15em] uppercase font-bold px-2.5 py-1 rounded-md">
                 {product.badge}
               </span>
             )}
@@ -142,7 +142,7 @@ export default function ProductModal({ product, onClose }) {
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setQty((q) => Math.max(1, q - 1))}
-                  className="w-9 h-9 flex items-center justify-center rounded border border-white/15 text-white hover:border-gold hover:text-gold transition-colors"
+                  className="w-9 h-9 flex items-center justify-center rounded-full border border-white/15 text-white hover:border-gold hover:text-gold transition-colors"
                   aria-label="Decrease quantity"
                 >
                   <FaMinus size={11} />
@@ -150,7 +150,7 @@ export default function ProductModal({ product, onClose }) {
                 <span className="w-6 text-center font-montserrat text-sm text-white">{qty}</span>
                 <button
                   onClick={() => setQty((q) => q + 1)}
-                  className="w-9 h-9 flex items-center justify-center rounded border border-white/15 text-white hover:border-gold hover:text-gold transition-colors"
+                  className="w-9 h-9 flex items-center justify-center rounded-full border border-white/15 text-white hover:border-gold hover:text-gold transition-colors"
                   aria-label="Increase quantity"
                 >
                   <FaPlus size={11} />
@@ -161,7 +161,7 @@ export default function ProductModal({ product, onClose }) {
             <button
               onClick={handleAddToCart}
               disabled={isOutOfStock}
-              className={`w-full rounded font-montserrat text-[0.7rem] tracking-[0.18em] uppercase font-semibold py-3.5 transition-all duration-300 ease-out
+              className={`w-full rounded-full font-montserrat text-[0.7rem] tracking-[0.18em] uppercase font-semibold py-3.5 transition-all duration-300 ease-out
                 ${isOutOfStock
                   ? 'border border-white/10 text-[#555] cursor-not-allowed'
                   : 'bg-gold text-black border border-gold hover:bg-transparent hover:text-gold hover:shadow-[0_0_0_1px_rgba(201,168,76,0.6)] active:scale-[0.98]'
