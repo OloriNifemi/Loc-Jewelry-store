@@ -1,14 +1,24 @@
 import { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react'
 
 const CartContext = createContext(null)
+const CART_CACHE_KEY = 'loc_cart_cache'
+const LEGACY_ID_KEY = 'loc_cart_id'
 
-function getOrCreateCartId() {
-  let id = localStorage.getItem('loc_cart_id')
-  if (!id) {
-    id = crypto.randomUUID()
-    localStorage.setItem('loc_cart_id', id)
+function readCachedCart() {
+  try {
+    const raw = localStorage.getItem(CART_CACHE_KEY)
+    return raw ? JSON.parse(raw) : []
+  } catch {
+    return []
   }
-  return id
+}
+
+function writeCachedCart(items) {
+  try {
+    localStorage.setItem(CART_CACHE_KEY, JSON.stringify(items))
+  } catch {
+    // best-effort only
+  }
 }
 
 function parsePrice(priceStr) {
@@ -17,8 +27,8 @@ function parsePrice(priceStr) {
 }
 
 export function CartProvider({ children }) {
-  const [cartId] = useState(getOrCreateCartId)
-  const [cart, setCart] = useState([])
+  const [cartId, setCartId] = useState(null)
+  const [cart, setCart] = useState(readCachedCart)
   const [loading, setLoading] = useState(true)
   const [toast, setToast] = useState(null)
   const [preview, setPreview] = useState(null)
@@ -38,25 +48,43 @@ export function CartProvider({ children }) {
     setCartDrawerOpen(false)
   }
 
-  const fetchCart = useCallback(async () => {
+  const fetchCart = useCallback(async (id) => {
+    if (!id) return
     const myVersion = requestVersion.current
     try {
-      const res = await fetch(`/api/cart-get?cartId=${cartId}`)
+      const res = await fetch(`/api/cart-get?cartId=${id}`)
       const data = await res.json()
       if (myVersion !== requestVersion.current) return
-      setCart(Array.isArray(data) ? data : [])
+      const items = Array.isArray(data) ? data : []
+      setCart(items)
+      writeCachedCart(items)
     } catch (err) {
       console.error('Failed to fetch cart:', err)
+      // leave whatever's already in state (cache) alone on failure
     } finally {
       if (myVersion === requestVersion.current) setLoading(false)
     }
-  }, [cartId])
+  }, [])
 
+  // Resolve the cookie-backed cartId once on mount, then load the real cart
   useEffect(() => {
-    fetchCart()
+    async function initCart() {
+      const legacyId = localStorage.getItem(LEGACY_ID_KEY) || ''
+      try {
+        const res = await fetch(`/api/cart-id${legacyId ? `?legacyId=${legacyId}` : ''}`)
+        const data = await res.json()
+        setCartId(data.cartId)
+        fetchCart(data.cartId)
+      } catch (err) {
+        console.error('Failed to resolve cart id:', err)
+        setLoading(false)
+      }
+    }
+    initCart()
   }, [fetchCart])
 
   async function addToCart(product) {
+    if (!cartId) return
     const qty = product.quantity > 0 ? product.quantity : 1
     const color = product.color || 'Gold'
     const productKey = `${product.name}-${product.category}-${color}`
@@ -67,26 +95,27 @@ export function CartProvider({ children }) {
 
     setCart((prev) => {
       const existing = prev.find((item) => item.productKey === productKey)
-      if (existing) {
-        return prev.map((item) =>
-          item.productKey === productKey
-            ? { ...item, quantity: item.quantity + qty }
-            : item
-        )
-      }
-      return [
-        ...prev,
-        {
-          _id: `temp-${productKey}`,
-          productKey,
-          productName: product.name,
-          category: product.category,
-          price: product.price,
-          image: product.image,
-          color,
-          quantity: qty,
-        },
-      ]
+      const next = existing
+        ? prev.map((item) =>
+            item.productKey === productKey
+              ? { ...item, quantity: item.quantity + qty }
+              : item
+          )
+        : [
+            ...prev,
+            {
+              _id: `temp-${productKey}`,
+              productKey,
+              productName: product.name,
+              category: product.category,
+              price: product.price,
+              image: product.image,
+              color,
+              quantity: qty,
+            },
+          ]
+      writeCachedCart(next)
+      return next
     })
 
     setPreview({
@@ -112,11 +141,11 @@ export function CartProvider({ children }) {
           quantity: qty,
         }),
       })
-      await fetchCart()
+      await fetchCart(cartId)
     } catch (err) {
       console.error('Failed to add to cart:', err)
       showToast('Failed to add item — try again')
-      await fetchCart()
+      await fetchCart(cartId)
     }
   }
 
@@ -124,12 +153,14 @@ export function CartProvider({ children }) {
     const removedItem = cart.find((item) => item._id === itemId)
 
     requestVersion.current++
-    setCart((prev) => prev.filter((item) => item._id !== itemId))
+    setCart((prev) => {
+      const next = prev.filter((item) => item._id !== itemId)
+      writeCachedCart(next)
+      return next
+    })
     if (removedItem) showToast(`${removedItem.productName} removed from cart`)
 
-    if (itemId.startsWith('temp-')) {
-      return
-    }
+    if (itemId.startsWith('temp-')) return
 
     try {
       await fetch('/api/cart-remove', {
@@ -140,7 +171,7 @@ export function CartProvider({ children }) {
     } catch (err) {
       console.error('Failed to remove item:', err)
       showToast('Failed to remove item — try again')
-      await fetchCart()
+      await fetchCart(cartId)
     }
   }
 
@@ -151,17 +182,14 @@ export function CartProvider({ children }) {
     requestVersion.current++
 
     setCart((prev) => {
-      if (item.quantity <= 1) {
-        return prev.filter((i) => i._id !== itemId)
-      }
-      return prev.map((i) =>
-        i._id === itemId ? { ...i, quantity: i.quantity - 1 } : i
-      )
+      const next = item.quantity <= 1
+        ? prev.filter((i) => i._id !== itemId)
+        : prev.map((i) => (i._id === itemId ? { ...i, quantity: i.quantity - 1 } : i))
+      writeCachedCart(next)
+      return next
     })
 
-    if (itemId.startsWith('temp-')) {
-      return
-    }
+    if (itemId.startsWith('temp-')) return
 
     try {
       await fetch('/api/cart-decrement', {
@@ -169,11 +197,11 @@ export function CartProvider({ children }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ itemId }),
       })
-      await fetchCart()
+      await fetchCart(cartId)
     } catch (err) {
       console.error('Failed to decrement item:', err)
       showToast('Failed to update quantity — try again')
-      await fetchCart()
+      await fetchCart(cartId)
     }
   }
 
@@ -183,15 +211,13 @@ export function CartProvider({ children }) {
 
     requestVersion.current++
 
-    setCart((prev) =>
-      prev.map((i) =>
-        i._id === itemId ? { ...i, quantity: i.quantity + 1 } : i
-      )
-    )
+    setCart((prev) => {
+      const next = prev.map((i) => (i._id === itemId ? { ...i, quantity: i.quantity + 1 } : i))
+      writeCachedCart(next)
+      return next
+    })
 
-    if (itemId.startsWith('temp-')) {
-      return
-    }
+    if (itemId.startsWith('temp-')) return
 
     try {
       await fetch('/api/cart-increment', {
@@ -199,19 +225,20 @@ export function CartProvider({ children }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ itemId }),
       })
-      await fetchCart()
+      await fetchCart(cartId)
     } catch (err) {
       console.error('Failed to increment item:', err)
       showToast('Failed to update quantity — try again')
-      await fetchCart()
+      await fetchCart(cartId)
     }
   }
 
   async function clearAllItems() {
-    if (cart.length === 0) return
+    if (cart.length === 0 || !cartId) return
 
     requestVersion.current++
     setCart([])
+    writeCachedCart([])
     setPreview(null)
     setCartDrawerOpen(false)
     showToast('Cart cleared')
@@ -224,7 +251,7 @@ export function CartProvider({ children }) {
       })
     } catch (err) {
       console.error('Failed to clear cart:', err)
-      await fetchCart()
+      await fetchCart(cartId)
     }
   }
 

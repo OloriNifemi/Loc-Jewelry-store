@@ -1,9 +1,10 @@
 import { AnimatePresence, motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { FaXmark } from 'react-icons/fa6'
 import { useCart } from '../../context/CartContext.jsx'
 
 export default function CartPreviewDropdown() {
-  const { preview, closePreview, openCartDrawer, clearCart } = useCart()
+  const { preview, closePreview, openCartDrawer } = useCart()
 
   return (
     <AnimatePresence>
@@ -14,7 +15,7 @@ export default function CartPreviewDropdown() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.2 }}
-          className="fixed top-20 right-[5vw] w-80 bg-[#161616] border border-gold/20 rounded-2xl shadow-xl z-[100] overflow-hidden"
+          className="fixed top-20 right-[5vw] w-80 bg-[#161616] border border-gold/20 rounded-xl shadow-xl z-[100] overflow-hidden"
         >
           <div className="flex items-center justify-between gap-3 px-5 py-4 border-b border-white/10">
             <div className="min-w-0">
@@ -45,24 +46,24 @@ export default function CartPreviewDropdown() {
                 closePreview()
                 openCartDrawer()
               }}
-              className="w-full py-2.5 rounded-full border border-gold/40 text-gold font-montserrat text-[0.65rem] tracking-[0.15em] uppercase font-semibold hover:bg-gold hover:text-black transition-colors duration-200"
+              className="w-full py-2.5 rounded border border-gold/40 text-gold font-montserrat text-[0.65rem] tracking-[0.15em] uppercase font-semibold hover:bg-gold hover:text-black transition-colors duration-200"
             >
               View Cart
             </button>
-            <button
-              onClick={() => {
-                closePreview()
-                clearCart()
-              }}
-              className="w-full py-2.5 rounded-full bg-gold text-black font-montserrat text-[0.65rem] tracking-[0.15em] uppercase font-semibold hover:opacity-90 transition-opacity duration-200"
+
+            <Link
+              to="/checkout"
+              onClick={closePreview}
+              className="block text-center w-full py-2.5 rounded bg-gold text-black font-montserrat text-[0.65rem] tracking-[0.15em] uppercase font-semibold hover:opacity-90 transition-opacity duration-200 no-underline"
             >
               Checkout
-            </button>
+            </Link>
+
             <button
               onClick={closePreview}
               className="text-center text-[#888] hover:text-gold text-[0.7rem] font-montserrat tracking-wide mt-1 transition-colors"
-              
-            > Continue Shopping
+            >
+              Continue Shopping
             </button>
           </div>
         </motion.div>
