@@ -1,6 +1,8 @@
 // App.jsx
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
+import Checkout from './pages/Checkout.jsx'
+import OrderSuccess from './pages/OrderSuccess.jsx'
 import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import Home from './pages/Home.jsx'
@@ -67,6 +69,22 @@ export default function App() {
               </motion.div>
             }
           />
+            <Route
+              path="/checkout"
+              element={
+                <motion.div {...pageTransition}>
+                  <Checkout />
+                </motion.div>
+              }
+            />
+            <Route
+              path="/order-success"
+              element={
+                <motion.div {...pageTransition}>
+                  <OrderSuccess />
+                </motion.div>
+              }
+            />
         </Routes>
       </AnimatePresence>
 

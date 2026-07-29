@@ -1,15 +1,17 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { FaWhatsapp, FaXmark, FaTrash, FaMinus } from 'react-icons/fa6'
+import { Link } from 'react-router-dom'
+import { FaWhatsapp, FaXmark, FaTrash, FaMinus, FaPlus } from 'react-icons/fa6'
 import { useCart } from '../../context/CartContext.jsx'
+
 
 export default function CartDrawer() {
   const {
     cart,
     loading,
     cartTotal,
+    incrementItem,
     decrementItem,
     removeFromCart,
-    clearCart,
     clearAllItems,
     cartDrawerOpen,
     closeCartDrawer,
@@ -62,7 +64,7 @@ export default function CartDrawer() {
                         <img
                           src={item.image}
                           alt={item.productName}
-                          className="w-16 h-16 object-cover rounded-full border border-white/10 shrink-0"
+                          className="w-16 h-16 object-cover rounded-md border border-white/10 shrink-0"
                         />
                         <div className="flex-1 min-w-0">
                           <p className="text-white text-sm font-medium truncate">{item.productName}</p>
@@ -72,7 +74,7 @@ export default function CartDrawer() {
                           <div className="flex items-center gap-3 mt-2">
                             <button
                               onClick={() => decrementItem(item._id)}
-                              className="w-9 h-9 sm:w-6 sm:h-6 flex items-center justify-center rounded-full border border-white/15 text-white hover:border-gold hover:text-gold transition-colors"
+                              className="w-9 h-9 sm:w-6 sm:h-6 flex items-center justify-center rounded border border-white/15 text-white hover:border-gold hover:text-gold transition-colors"
                               aria-label="Decrease quantity"
                             >
                               <FaMinus size={12} className="sm:hidden" />
@@ -81,6 +83,14 @@ export default function CartDrawer() {
                             <span className="w-5 text-center font-montserrat text-xs text-white">
                               {item.quantity}
                             </span>
+                            <button
+                              onClick={() => incrementItem(item._id)}
+                              className="w-9 h-9 sm:w-6 sm:h-6 flex items-center justify-center rounded border border-white/15 text-white hover:border-gold hover:text-gold transition-colors"
+                              aria-label="Increase quantity"
+                            >
+                              <FaPlus size={12} className="sm:hidden" />
+                              <FaPlus size={9} className="hidden sm:block" />
+                            </button>
                           </div>
                         </div>
                         <button
@@ -103,13 +113,13 @@ export default function CartDrawer() {
                   <span className="text-[#888] text-sm">Total</span>
                   <span className="text-gold font-semibold">₦{cartTotal.toLocaleString()}</span>
                 </div>
-                <button
-                  onClick={clearCart}
-                  className="flex items-center justify-center gap-2 w-full bg-gold text-black rounded-full font-montserrat text-[0.7rem] tracking-[0.15em] uppercase font-semibold py-4 hover:opacity-90 transition-opacity"
+                <Link
+                  to="/checkout"
+                  onClick={closeCartDrawer}
+                  className="flex items-center justify-center gap-2 w-full bg-gold text-black rounded font-montserrat text-[0.7rem] tracking-[0.15em] uppercase font-semibold py-3 hover:opacity-90 transition-opacity no-underline"
                 >
-                  <FaWhatsapp size={14} />
-                  Checkout via WhatsApp
-                </button>
+                  Checkout
+                </Link>
               </div>
             )}
           </motion.div>

@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react'
 
 const CartContext = createContext(null)
-const WA_BASE = 'https://wa.me/2349116971778?text='
 
 function getOrCreateCartId() {
   let id = localStorage.getItem('loc_cart_id')
@@ -178,43 +177,32 @@ export function CartProvider({ children }) {
     }
   }
 
-  function buildWhatsAppMessage() {
-    const lines = [
-      `Hi! 👋 I'd like to order the following from L.O.C:`,
-      ``,
-      ...cart.map(
-        (item) =>
-          `• ${item.productName} (${item.category}, ${item.color}) x${item.quantity} — ${item.price}`
-      ),
-      ``,
-      `💰 Total: ₦${cart
-        .reduce((sum, item) => sum + parsePrice(item.price) * item.quantity, 0)
-        .toLocaleString()}`,
-      ``,
-      `Could you please confirm availability and how I can complete payment? Thank you! 🙏`,
-    ]
-    return lines.join('\n')
-  }
-
-  async function clearCart() {
-    if (cart.length === 0) return
-    const message = buildWhatsAppMessage()
-    window.open(`${WA_BASE}${encodeURIComponent(message)}`, '_blank')
+  async function incrementItem(itemId) {
+    const item = cart.find((i) => i._id === itemId)
+    if (!item) return
 
     requestVersion.current++
-    setCart([])
-    setPreview(null)
-    setCartDrawerOpen(false)
-    showToast('Cart cleared')
+
+    setCart((prev) =>
+      prev.map((i) =>
+        i._id === itemId ? { ...i, quantity: i.quantity + 1 } : i
+      )
+    )
+
+    if (itemId.startsWith('temp-')) {
+      return
+    }
 
     try {
-      await fetch('/api/cart-clear', {
+      await fetch('/api/cart-increment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ cartId }),
+        body: JSON.stringify({ itemId }),
       })
+      await fetchCart()
     } catch (err) {
-      console.error('Failed to clear cart:', err)
+      console.error('Failed to increment item:', err)
+      showToast('Failed to update quantity — try again')
       await fetchCart()
     }
   }
@@ -224,6 +212,8 @@ export function CartProvider({ children }) {
 
     requestVersion.current++
     setCart([])
+    setPreview(null)
+    setCartDrawerOpen(false)
     showToast('Cart cleared')
 
     try {
@@ -244,14 +234,15 @@ export function CartProvider({ children }) {
   return (
     <CartContext.Provider
       value={{
+        cartId,
         cart,
         loading,
         cartCount,
         cartTotal,
         addToCart,
         removeFromCart,
+        incrementItem,
         decrementItem,
-        clearCart,
         clearAllItems,
         toast,
         preview,
